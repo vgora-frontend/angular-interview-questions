@@ -1,13 +1,13 @@
 // Derive the unions from a single source (`as const`) so the allowed values and
 // the type can never drift apart - no scattered magic strings.
-const LANGS = ['en', 'ua'] as const;
+export const LANGS = ['en', 'ua'] as const;
 const THEMES = ['light', 'dark'] as const;
 
 export type Lang = (typeof LANGS)[number]; // 'en' | 'ua'
 export type Theme = (typeof THEMES)[number]; // 'light' | 'dark'
 
-// A string that exists in every supported language.
-export type Localized = Record<Lang, string>;
+// Fallback language when nothing is stored (deliberate default, not LANGS[0]).
+export const DEFAULT_LANG: Lang = 'en';
 
 // Narrow a stored string (e.g. from localStorage) to a supported union member.
 // Built from the same `as const` source, so adding a value updates these too.

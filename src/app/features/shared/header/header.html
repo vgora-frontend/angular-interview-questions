@@ -1,33 +1,29 @@
 <div class="bar">
   <div class="brand">Angular <span class="ital">Interview</span> Q&amp;A</div>
-  <nav class="controls" aria-label="Site controls">
-    <div class="lang" role="group" aria-label="Language">
-      <button
-        type="button"
-        [class.active]="lang() === 'en'"
-        [attr.aria-pressed]="lang() === 'en'"
-        (click)="setLang('en')"
-      >
-        EN
-      </button>
-      <span aria-hidden="true">|</span>
-      <button
-        type="button"
-        [class.active]="lang() === 'ua'"
-        [attr.aria-pressed]="lang() === 'ua'"
-        (click)="setLang('ua')"
-      >
-        UA
-      </button>
+  <nav class="controls" [attr.aria-label]="'header.controls' | transloco">
+    <div class="lang" role="group" [attr.aria-label]="'header.language' | transloco">
+      @for (code of langs; track code; let last = $last) {
+        <button
+          type="button"
+          [class.active]="lang() === code"
+          [attr.aria-pressed]="lang() === code"
+          (click)="setLang(code)"
+        >
+          {{ code.toUpperCase() }}
+        </button>
+        @if (!last) {
+          <span aria-hidden="true">|</span>
+        }
+      }
     </div>
     <button
       type="button"
       class="theme"
-      [attr.aria-label]="themeAria()"
+      [attr.aria-label]="'header.switchTo.' + theme.next() | transloco"
       (click)="theme.toggle()"
     >
-      {{ themeLabel() }}
+      {{ 'header.theme.' + theme.next() | transloco }}
     </button>
-    <a href="#author">{{ aboutLabel() }}</a>
+    <a href="#author">{{ 'header.about' | transloco }}</a>
   </nav>
 </div>

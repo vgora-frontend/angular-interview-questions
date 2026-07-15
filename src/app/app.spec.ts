@@ -1,10 +1,19 @@
 import { TestBed } from '@angular/core/testing';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 import { App } from './app';
+import { DEFAULT_LANG, LANGS } from './core/models/content.model';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
+      imports: [
+        App,
+        TranslocoTestingModule.forRoot({
+          langs: Object.fromEntries(LANGS.map((lang) => [lang, {}])),
+          translocoConfig: { availableLangs: [...LANGS], defaultLang: DEFAULT_LANG },
+          preloadLangs: true,
+        }),
+      ],
     }).compileComponents();
   });
 

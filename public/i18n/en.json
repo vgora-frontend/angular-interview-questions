@@ -1,0 +1,18 @@
+{
+  "header": {
+    "controls": "Site controls",
+    "language": "Language",
+    "about": "About",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "switchTo": {
+      "light": "Switch to light theme",
+      "dark": "Switch to dark theme"
+    }
+  },
+  "shell": {
+    "placeholder": "Shell is live. Use the header to flip the theme and switch language - the home feature is coming next."
+  }
+}

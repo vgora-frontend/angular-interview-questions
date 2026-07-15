@@ -6,7 +6,8 @@ import {
   signal,
 } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Lang, Localized, isLang } from './models/content.model';
+import { TranslocoService } from '@jsverse/transloco';
+import { DEFAULT_LANG, Lang, isLang } from './models/content.model';
 
 const STORAGE_KEY = 'lang';
 
@@ -14,12 +15,16 @@ const STORAGE_KEY = 'lang';
 export class LanguageService {
   private readonly doc = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly transloco = inject(TranslocoService);
 
+  // Single source of truth for the app; components read/render this signal.
   readonly lang = signal<Lang>(this.initial());
 
   constructor() {
+    // Keep Transloco's active language, <html lang>, and storage in sync.
     effect(() => {
       const lang = this.lang();
+      this.transloco.setActiveLang(lang);
       this.doc.documentElement.lang = lang;
       if (this.isBrowser) {
         localStorage.setItem(STORAGE_KEY, lang);
@@ -31,15 +36,11 @@ export class LanguageService {
     this.lang.set(lang);
   }
 
-  // Resolve a bilingual value to the active language. An arrow field so it can
-  // be passed straight to templates without losing `this`.
-  readonly t = (value: Localized): string => value[this.lang()];
-
   private initial(): Lang {
     if (!this.isBrowser) {
-      return 'en';
+      return DEFAULT_LANG;
     }
     const saved = localStorage.getItem(STORAGE_KEY);
-    return isLang(saved) ? saved : 'en';
+    return isLang(saved) ? saved : DEFAULT_LANG;
   }
 }
