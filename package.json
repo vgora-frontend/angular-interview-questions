@@ -3,8 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "check:tokens": "node scripts/check-css-tokens.mjs",
+    "prestart": "npm run check:tokens",
     "start": "ng serve",
+    "prebuild": "npm run check:tokens",
     "build": "ng build",
+    "prewatch": "npm run check:tokens",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
