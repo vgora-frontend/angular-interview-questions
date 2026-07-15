@@ -16,6 +16,10 @@
   --font-serif: "Newsreader", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Layout (theme-independent) */
+  --content-max-width: 880px; /* shared max width for header bar and page content */
+  --gutter: 32px; /* horizontal page padding */
 }
 
 :root[data-theme="dark"] {

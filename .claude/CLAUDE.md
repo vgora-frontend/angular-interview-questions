@@ -2,8 +2,9 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 
 ## Character Set
 
-- Use ONLY keyboard-typable ASCII characters in all files (code, templates, comments, docs).
-- Do NOT use typographic (non-ASCII) characters. Replace them with ASCII equivalents:
+- For code, punctuation, and symbols use ONLY keyboard-typable ASCII characters (in code, templates, comments, docs).
+- EXCEPTION: natural-language text content may use non-ASCII letters when the language requires it (e.g. Ukrainian/Cyrillic UI copy and translations). The ban is on typographic punctuation and decorative symbols, NOT on human-language letters.
+- Do NOT use typographic (non-ASCII) punctuation/symbols. Replace them with ASCII equivalents:
   - em dash / en dash (U+2014, U+2013) -> hyphen `-`
   - curly single/double quotes (U+2018, U+2019, U+201C, U+201D) -> straight `'` and `"`
   - ellipsis (U+2026) -> three dots `...`
@@ -37,7 +38,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Keep components small and focused on a single responsibility
 - Use `input()` and `output()` functions instead of decorators
 - Use `computed()` for derived state
-- Prefer inline templates for small components
+- Do NOT use inline `template` or `styles` in the `@Component` decorator. ALWAYS put markup in a separate `.html` file (via `templateUrl`) and CSS in a separate `.scss` file (via `styleUrl`), even for tiny components.
 - Prefer Reactive forms instead of Template-driven ones
 - Do NOT use `ngClass`, use `class` bindings instead
 - Do NOT use `ngStyle`, use `style` bindings instead

@@ -1,0 +1,33 @@
+<div class="bar">
+  <div class="brand">Angular <span class="ital">Interview</span> Q&amp;A</div>
+  <nav class="controls" aria-label="Site controls">
+    <div class="lang" role="group" aria-label="Language">
+      <button
+        type="button"
+        [class.active]="lang() === 'en'"
+        [attr.aria-pressed]="lang() === 'en'"
+        (click)="setLang('en')"
+      >
+        EN
+      </button>
+      <span aria-hidden="true">|</span>
+      <button
+        type="button"
+        [class.active]="lang() === 'ua'"
+        [attr.aria-pressed]="lang() === 'ua'"
+        (click)="setLang('ua')"
+      >
+        UA
+      </button>
+    </div>
+    <button
+      type="button"
+      class="theme"
+      [attr.aria-label]="themeAria()"
+      (click)="theme.toggle()"
+    >
+      {{ themeLabel() }}
+    </button>
+    <a href="#author">{{ aboutLabel() }}</a>
+  </nav>
+</div>

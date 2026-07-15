@@ -1,37 +1,12 @@
-<!-- TEMP Step 1 preview: verifies design tokens, fonts, accent & theme flip. -->
-<main class="preview">
-  <div class="rule"></div>
+<app-header />
 
-  <header class="head">
-    <h1>Angular <span class="ital">Interview</span> Q&A</h1>
-    <button type="button" class="toggle" (click)="toggleTheme()">
-      {{ toggleLabel() }}
-    </button>
-  </header>
+<router-outlet />
 
+<!-- TEMP placeholder until the home feature (hero + feed + timeline + quiz + author)
+     lands in the next step. Confirms the shell, tokens, theme & language toggles. -->
+<main class="shell-placeholder">
   <p class="lede">
-    Step 1 check - if the serif heading, this body font, the terracotta accent,
-    and the dark code block all look right (and the toggle flips the palette),
-    the tokens and fonts are wired correctly.
+    Shell is live. Use the header to flip the theme and switch language - the
+    home feature is coming next.
   </p>
-
-  <section class="fonts">
-    <p class="serif">Newsreader - serif headings & <em>italic accents</em></p>
-    <p class="sans">Plus Jakarta Sans - UI & body text</p>
-    <p class="mono">JetBrains Mono - tags & code - 0123456789</p>
-  </section>
-
-  <div class="swatches">
-    <span class="sw" style="background: var(--bg)">bg</span>
-    <span class="sw" style="background: var(--bg-alt)">bg-alt</span>
-    <span class="sw" style="background: var(--card-bg)">card</span>
-    <span class="sw" style="background: var(--accent); color: #fff">accent</span>
-    <span class="sw" style="background: var(--border)">border</span>
-    <span class="sw" style="color: var(--muted); border: 1px solid var(--border)">muted</span>
-  </div>
-
-  <pre class="code">
-    <code>const count = signal(0);
-    const double = computed(() => count() * 2);</code>
-  </pre>
 </main>
