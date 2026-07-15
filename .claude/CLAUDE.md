@@ -1,5 +1,16 @@
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+## Character Set
+
+- Use ONLY keyboard-typable ASCII characters in all files (code, templates, comments, docs).
+- Do NOT use typographic (non-ASCII) characters. Replace them with ASCII equivalents:
+  - em dash / en dash (U+2014, U+2013) -> hyphen `-`
+  - curly single/double quotes (U+2018, U+2019, U+201C, U+201D) -> straight `'` and `"`
+  - ellipsis (U+2026) -> three dots `...`
+  - middle dot (U+00B7) -> hyphen `-` or pipe `|`
+  - arrow (U+2192) -> `->`
+  - section sign (U+00A7) -> the word `section`
+
 ## TypeScript Best Practices
 
 - Use strict type checking

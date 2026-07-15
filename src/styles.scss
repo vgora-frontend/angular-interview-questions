@@ -1,1 +1,126 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles: design tokens, themes, fonts, animations, resets. */
+
+:root {
+  /* Light (extracted verbatim from the template) */
+  --bg: #fbf9f6;
+  --bg-alt: #f5f0e6;
+  --card-bg: #f9f6f0;
+  --ink: #23201b;
+  --ink-soft: #4a443b;
+  --accent: #c15f3c;
+  --muted: #6e655a; /* darkened from #8A8072 -> passes WCAG AA (see guide section 12) */
+  --border: #e8e2d5;
+  --glass: rgba(251, 249, 246, 0.72);
+  --code-bg: #1e1e1e;
+  --code-ink: #e8e2d5;
+  --font-serif: "Newsreader", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root[data-theme="dark"] {
+  --bg: #1a1815;
+  --bg-alt: #23201b;
+  --card-bg: #23201b;
+  --ink: #ede8de;
+  --ink-soft: #c3bbad;
+  --accent: #d9915f; /* warmer accent the template uses on dark surfaces */
+  --muted: #9a8f7e;
+  --border: #322e28;
+  --glass: rgba(26, 24, 21, 0.72);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+::selection {
+  background: rgba(193, 95, 60, 0.18);
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ruleGrow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ghostIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 0.055;
+    transform: none;
+  }
+}
+
+/* Accessibility: respect reduced-motion (template has none - we add it). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
