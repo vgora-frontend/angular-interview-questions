@@ -1,59 +1,56 @@
-# AngularInterviewQuestions
+# Angular Interview Questions
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.0.
+A small, open-source study app for Angular interview questions, built as a playground for current Angular 22 patterns (standalone components, signals) with bilingual content (EN / UA).
 
-## Development server
+**Live:** https://vgora-frontend.github.io/angular-interview-questions/
 
-To start a local development server, run:
+> **Status: in active development.** The application shell is live and theme and language switching work end to end. The main content feature (question feed, timeline and quiz) is the next milestone.
 
-```bash
-ng serve
-```
+## Highlights
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Angular 22**, standalone components, zoneless-ready.
+- **Signals-first state:** `ThemeService` and `LanguageService` are built on `signal` / `computed` / `effect`, SSR-safe via `isPlatformBrowser`.
+- **Bilingual (EN / UA)** with [Transloco](https://jsverse.github.io/transloco/); the active language syncs to `<html lang>` and `localStorage`.
+- **Light / dark theme** persisted across sessions, defaulting to the OS `prefers-color-scheme`.
+- **CSS design-token system** with a pre-build validator (`scripts/check-css-tokens.mjs`) that fails the build on unknown custom-property references.
+- **Typed by construction:** allowed languages and themes are derived from a single `as const` source with type guards, so values and types cannot drift.
+- **CI/CD:** GitHub Actions builds and deploys to GitHub Pages on every push to `main`.
 
-## Code scaffolding
+## Tech stack
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Angular 22, TypeScript, RxJS, Transloco, Vitest, SCSS design tokens, GitHub Actions and GitHub Pages.
 
-```bash
-ng generate component component-name
-```
+## Getting started
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+Requires **Node 22+** and npm.
 
 ```bash
-ng build
+npm ci          # install dependencies
+npm start       # dev server at http://localhost:4200
+npm run build   # production build to dist/
+npm test        # unit tests (Vitest)
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+> `start` and `build` run `check:tokens` first (via the `prestart` / `prebuild` hooks), so an unknown CSS custom property fails fast.
 
-## Running unit tests
+## Project structure
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+```
+src/app/
+  core/                 # framework-agnostic services & models
+    models/             # typed unions + guards (Lang, Theme)
+    language.service.ts # active language (Transloco + <html lang> + storage)
+    theme.service.ts    # light/dark theme (system default + storage)
+  features/shared/
+    header/             # site header: theme + language controls
+public/i18n/            # en.json, ua.json translation catalogues
+scripts/                # check-css-tokens.mjs (pre-build guard)
 ```
 
-## Running end-to-end tests
+## Deployment
 
-For end-to-end (e2e) testing, run:
+Pushing to `main` triggers [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml): it builds with the Pages base-href, adds a SPA `404.html` fallback, and publishes to GitHub Pages.
 
-```bash
-ng e2e
-```
+## License
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+[MIT](LICENSE) (c) vgora-frontend
