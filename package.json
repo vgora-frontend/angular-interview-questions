@@ -4,11 +4,13 @@
   "scripts": {
     "ng": "ng",
     "check:tokens": "node scripts/check-css-tokens.mjs",
-    "prestart": "npm run check:tokens",
+    "check:i18n": "node scripts/check-i18n.mjs",
+    "check": "npm run check:tokens && npm run check:i18n",
+    "prestart": "npm run check",
     "start": "ng serve",
-    "prebuild": "npm run check:tokens",
+    "prebuild": "npm run check",
     "build": "ng build",
-    "prewatch": "npm run check:tokens",
+    "prewatch": "npm run check",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

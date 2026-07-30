@@ -1,14 +1,11 @@
-import {
-  ApplicationConfig,
-  isDevMode,
-  provideBrowserGlobalErrorListeners,
-} from '@angular/core';
+import { ApplicationConfig, isDevMode, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideTransloco } from '@jsverse/transloco';
+import { provideTransloco, provideTranslocoMissingHandler } from '@jsverse/transloco';
 
 import { routes } from './app.routes';
 import { TranslocoHttpLoader } from './core/i18n/transloco-loader';
+import { StrictMissingHandler } from './core/i18n/strict-missing-handler';
 import { DEFAULT_LANG, LANGS } from './core/models/content.model';
 
 export const appConfig: ApplicationConfig = {
@@ -26,5 +23,7 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader,
     }),
+    // Must come after provideTransloco - it registers the default handler.
+    provideTranslocoMissingHandler(StrictMissingHandler),
   ],
 };
