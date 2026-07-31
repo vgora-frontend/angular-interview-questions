@@ -32,6 +32,23 @@
   --reading-max-width: 640px; /* measure for answer text: modal card and feed panel */
   --section-gap: 96px; /* vertical rhythm between page modules */
 
+  /* Type scale (theme-independent).
+     Steps, not roles: 12px is the count, the tab divider and the secondary buttons alike,
+     so a role name would fit one caller and mislead the next.
+     Components pick a step - none declare their own px.
+     The template had 13 sizes for 24 call sites, including 12.5, 13.5 and 19;
+     those three are folded into the neighbouring step (see the commit). */
+  --text-3xs: 11px; /* mono category tags */
+  --text-2xs: 12px; /* meta text, dividers, secondary controls, code */
+  --text-xs: 13px; /* primary controls: tabs, pager, header links */
+  --text-sm: 14px; /* form fields */
+  --text-md: 15px; /* body copy - answers */
+  --text-lg: 16px; /* header bar */
+  --text-xl: 18px; /* serif: feed question, empty state */
+  --text-2xl: 20px; /* serif: brand, accordion marker */
+  --text-3xl: 22px; /* serif: modal close */
+  --text-4xl: 26px; /* serif: modal question */
+
   /* Motion (theme-independent). Named by speed rather than by purpose:
      the same 0.3s covers every hover colour change, and 0.35s every theme swap. */
   --ease: cubic-bezier(0.25, 1, 0.5, 1);

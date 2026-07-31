@@ -1,4 +1,5 @@
-/* Sizes, spacing and easing mirror the design template's category tabs. */
+/* Spacing mirrors the design template's category tabs;
+   type sizes, easing and durations come from the tokens in styles.scss. */
 
 :host {
   display: flex;
@@ -6,18 +7,18 @@
   gap: 14px;
   row-gap: 12px;
   flex-wrap: wrap;
-  font-size: 13.5px;
+  font-size: var(--text-xs);
   letter-spacing: 0.03em;
 }
 
 .divider {
   color: var(--border);
-  font-size: 12px;
+  font-size: var(--text-2xs);
 }
 
 .tab {
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: var(--text-xs);
   font-weight: 400;
   color: var(--muted);
   background: transparent;

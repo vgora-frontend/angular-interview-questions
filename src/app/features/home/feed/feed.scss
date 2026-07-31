@@ -1,4 +1,5 @@
-/* Sizes, spacing and easing mirror the design template's Q&A feed module. */
+/* Spacing mirrors the design template's Q&A feed module;
+   type sizes, easing and durations come from the tokens in styles.scss. */
 
 :host {
   display: block;
@@ -20,7 +21,7 @@
 }
 
 .count {
-  font-size: 12px;
+  font-size: var(--text-2xs);
   color: var(--muted);
   letter-spacing: 0.04em;
   white-space: nowrap;
@@ -29,7 +30,7 @@
 /* A bare button, styled from the tokens rather than the browser default. */
 .pill {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: var(--text-2xs);
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--accent);
@@ -72,7 +73,7 @@
   text-align: center;
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 18px;
+  font-size: var(--text-xl);
   color: var(--muted);
 }
 
