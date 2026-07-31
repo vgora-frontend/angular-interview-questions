@@ -1,5 +1,8 @@
 /* Global styles: design tokens, themes, fonts, animations, resets. */
 
+// Icon masks live apart: they are long data URIs, not design tokens.
+@use 'styles/icons';
+
 :root {
   /* Light (extracted verbatim from the template) */
   --bg: #fbf9f6;
@@ -13,16 +16,16 @@
   --glass: rgba(251, 249, 246, 0.72);
   --code-bg: #1e1e1e;
   --code-ink: #e8e2d5;
-  --font-serif: "Newsreader", Georgia, serif;
-  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-serif: 'Newsreader', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* Layout (theme-independent) */
   --content-max-width: 880px; /* shared max width for header bar and page content */
   --gutter: 32px; /* horizontal page padding */
 }
 
-:root[data-theme="dark"] {
+:root[data-theme='dark'] {
   --bg: #1a1815;
   --bg-alt: #23201b;
   --card-bg: #23201b;
@@ -50,7 +53,9 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
-  transition: background 0.35s ease, color 0.35s ease;
+  transition:
+    background 0.35s ease,
+    color 0.35s ease;
 }
 
 a {

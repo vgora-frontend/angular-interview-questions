@@ -1,0 +1,37 @@
+<app-modal [open]="practice.isOpen()" labelledBy="practice-modal-title" (closed)="practice.close()">
+  <!-- Head slot: outside the @if because projection only matches top-level nodes. -->
+  <span modalHead class="tag">{{ tag() }}</span>
+
+  @if (practice.question(); as question) {
+    <h2 class="q" id="practice-modal-title">{{ t(question.q) }}</h2>
+
+    <div
+      class="answer"
+      [class.open]="practice.revealed()"
+      [attr.inert]="practice.revealed() ? null : ''"
+    >
+      <div class="answer-inner">
+        <p class="text">{{ t(question.a) }}</p>
+        @if (question.code) {
+          <app-code-block [code]="question.code" />
+        }
+      </div>
+    </div>
+
+    @if (!practice.revealed()) {
+      <button type="button" class="reveal" (click)="practice.reveal()">
+        {{ 'practice.reveal' | transloco }}
+      </button>
+    }
+
+    <div class="footer">
+      <button type="button" class="another" (click)="practice.openRandomQuestion()">
+        {{ 'practice.another' | transloco }}
+      </button>
+      <!-- Quick-fire cards arrive with the quiz module; disabled until then. -->
+      <button type="button" class="switch" disabled>
+        {{ 'practice.quickFire' | transloco }}
+      </button>
+    </div>
+  }
+</app-modal>
