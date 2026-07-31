@@ -11,11 +11,17 @@
   --ink: #23201b;
   --ink-soft: #4a443b;
   --accent: #c15f3c;
+  /* The accent at low alpha, spelled out per theme like --glass below:
+     a tint written as a literal would keep the light accent in dark mode. */
+  --accent-tint: rgba(193, 95, 60, 0.08); /* hover fill on accent-outlined buttons */
+  --accent-selection: rgba(193, 95, 60, 0.18); /* ::selection */
   --muted: #6e655a; /* darkened from #8A8072 -> passes WCAG AA (see guide section 12) */
   --border: #e8e2d5;
   --glass: rgba(251, 249, 246, 0.72);
+  --scrim: rgba(25, 25, 25, 0.55); /* modal dim - deliberately the same over both themes */
   --code-bg: #1e1e1e;
   --code-ink: #e8e2d5;
+  --code-border: rgba(255, 255, 255, 0.06); /* hairline on the always-dark code surface */
   --font-serif: 'Newsreader', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -23,6 +29,23 @@
   /* Layout (theme-independent) */
   --content-max-width: 880px; /* shared max width for header bar and page content */
   --gutter: 32px; /* horizontal page padding */
+  --reading-max-width: 640px; /* measure for answer text: modal card and feed panel */
+  --section-gap: 96px; /* vertical rhythm between page modules */
+
+  /* Motion (theme-independent). Named by speed rather than by purpose:
+     the same 0.3s covers every hover colour change, and 0.35s every theme swap. */
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --dur-fast: 0.3s;
+  --dur-medium: 0.35s;
+  --dur-slow: 0.5s; /* accordion open/close */
+
+  /* Focus ring, in one place so every control is equally visible (WCAG AA). */
+  --focus-ring: 2px solid var(--accent);
+  --focus-offset: 2px;
+
+  /* Radii */
+  --radius-pill: 999px;
+  --radius-focus: 4px; /* rounds the ring on otherwise square controls */
 }
 
 :root[data-theme='dark'] {
@@ -32,6 +55,8 @@
   --ink: #ede8de;
   --ink-soft: #c3bbad;
   --accent: #d9915f; /* warmer accent the template uses on dark surfaces */
+  --accent-tint: rgba(217, 145, 95, 0.08);
+  --accent-selection: rgba(217, 145, 95, 0.18);
   --muted: #9a8f7e;
   --border: #322e28;
   --glass: rgba(26, 24, 21, 0.72);
@@ -54,8 +79,8 @@ body {
   color: var(--ink);
   font-family: var(--font-sans);
   transition:
-    background 0.35s ease,
-    color 0.35s ease;
+    background var(--dur-medium) ease,
+    color var(--dur-medium) ease;
 }
 
 a {
@@ -68,7 +93,7 @@ a:hover {
 }
 
 ::selection {
-  background: rgba(193, 95, 60, 0.18);
+  background: var(--accent-selection);
 }
 
 @keyframes shimmer {

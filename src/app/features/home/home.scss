@@ -1,10 +1,10 @@
 .page {
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: 72px var(--gutter) 96px;
+  padding: 72px var(--gutter) var(--section-gap);
 }
 
-/* Section rhythm from the template: 96px between page modules. */
+/* Section rhythm from the template - see --section-gap. */
 .feed-section {
-  margin-bottom: 96px;
+  margin-bottom: var(--section-gap);
 }

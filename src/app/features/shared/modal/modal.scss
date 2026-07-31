@@ -1,7 +1,5 @@
 /* Overlay and card chrome from the design template's modal. */
 
-$ease: cubic-bezier(0.25, 1, 0.5, 1);
-
 :host {
   display: contents;
 }
@@ -20,28 +18,31 @@ $ease: cubic-bezier(0.25, 1, 0.5, 1);
   padding: 32px;
   border: none;
   overflow: hidden;
-  background: rgba(25, 25, 25, 0.55);
+  background: var(--scrim);
   backdrop-filter: blur(8px);
   color: var(--ink);
 }
 
+/* The entrance durations stay literal on purpose:
+   overlay then card is one stagger, and the two only read as intended relative to each other.
+   Behind --dur-fast they would drift apart the moment that token is retuned. */
 .overlay[open] {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeInUp 0.3s $ease both;
+  animation: fadeInUp 0.3s var(--ease) both;
 }
 
 .card {
   width: 100%;
-  max-width: 640px;
+  max-width: var(--reading-max-width);
   max-height: 82vh;
   overflow-y: auto;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 40px 44px;
-  animation: fadeInUp 0.4s $ease both;
+  animation: fadeInUp 0.4s var(--ease) both;
 }
 
 .card-head {
@@ -61,7 +62,7 @@ $ease: cubic-bezier(0.25, 1, 0.5, 1);
   border: none;
   padding: 0;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color var(--dur-fast) ease;
 }
 
 .close:hover {
@@ -70,7 +71,7 @@ $ease: cubic-bezier(0.25, 1, 0.5, 1);
 
 /* Visible focus ring - the template killed outlines with all: unset. */
 .close:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-focus);
 }

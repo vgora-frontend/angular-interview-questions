@@ -1,8 +1,6 @@
 /* Body of the practice modal. The overlay, card and close button live in
    ../modal/modal.scss - this file only styles the projected content. */
 
-$ease: cubic-bezier(0.25, 1, 0.5, 1);
-
 :host {
   display: contents;
 }
@@ -35,7 +33,7 @@ $ease: cubic-bezier(0.25, 1, 0.5, 1);
 .answer {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.5s $ease;
+  transition: grid-template-rows var(--dur-slow) var(--ease);
 }
 
 .answer.open {
@@ -67,11 +65,11 @@ app-code-block {
   letter-spacing: 0.05em;
   color: var(--muted);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   padding: 8px 18px;
   transition:
-    color 0.3s $ease,
-    border-color 0.3s $ease;
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
 }
 
 .reveal:hover {
@@ -95,9 +93,9 @@ app-code-block {
   letter-spacing: 0.05em;
   color: var(--accent);
   border: 1px solid var(--accent);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   padding: 10px 22px;
-  transition: background 0.3s $ease;
+  transition: background var(--dur-fast) var(--ease);
 }
 
 /* Die face, decorative - see --icon-die in styles.scss. */
@@ -114,7 +112,7 @@ app-code-block {
 }
 
 .another:hover {
-  background: rgba(193, 95, 60, 0.08);
+  background: var(--accent-tint);
 }
 
 .switch {
@@ -124,8 +122,8 @@ app-code-block {
   border-bottom: 1px solid var(--border);
   padding-bottom: 2px;
   transition:
-    color 0.3s ease,
-    border-color 0.3s ease;
+    color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
 }
 
 .switch::after {
@@ -147,7 +145,7 @@ app-code-block {
 .reveal:focus-visible,
 .another:focus-visible,
 .switch:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-focus);
 }
