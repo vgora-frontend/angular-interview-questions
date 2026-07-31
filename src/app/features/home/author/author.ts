@@ -15,4 +15,5 @@ import { TranslocoPipe } from '@jsverse/transloco';
 export class AuthorComponent {
   protected readonly linkedIn = 'https://www.linkedin.com/in/vgora-frontend/';
   protected readonly github = 'https://github.com/vgora-frontend/';
+  protected readonly cv = 'https://vgora-frontend.github.io/cv/';
 }
