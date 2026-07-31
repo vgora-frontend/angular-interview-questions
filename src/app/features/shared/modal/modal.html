@@ -1,0 +1,24 @@
+<dialog
+  #dialogEl
+  class="overlay"
+  [attr.aria-labelledby]="labelledBy() ?? null"
+  (click)="onBackdropClick($event)"
+  (close)="closed.emit()"
+>
+  <div class="card">
+    <div class="card-head">
+      <!-- The left of the head row is the caller's: a tag, a label, or nothing.
+           Projection only matches top-level nodes, so keep it out of @if. -->
+      <ng-content select="[modalHead]" />
+      <button
+        type="button"
+        class="close"
+        [attr.aria-label]="'modal.close' | transloco"
+        (click)="closed.emit()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <ng-content />
+  </div>
+</dialog>

@@ -1,0 +1,19 @@
+/* Code snippet styling from the design template. Spacing around the block
+   is the caller's business - style the host element for that. */
+
+:host {
+  display: block;
+}
+
+.code {
+  margin: 0;
+  background: var(--code-bg);
+  color: var(--code-ink);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 18px 20px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  overflow-x: auto;
+}

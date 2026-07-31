@@ -1,0 +1,28 @@
+@if (totalPages() > 1) {
+  <nav class="pager" [attr.aria-label]="'pagination.label' | transloco">
+    <button type="button" class="step prev" [disabled]="page() === 1" (click)="go(page() - 1)">
+      {{ 'pagination.prev' | transloco }}
+    </button>
+    <div class="page-list">
+      @for (number of pages(); track number) {
+        <button
+          type="button"
+          class="page-number"
+          [class.active]="page() === number"
+          [attr.aria-current]="page() === number ? 'page' : null"
+          (click)="go(number)"
+        >
+          {{ number }}
+        </button>
+      }
+    </div>
+    <button
+      type="button"
+      class="step next"
+      [disabled]="page() === totalPages()"
+      (click)="go(page() + 1)"
+    >
+      {{ 'pagination.next' | transloco }}
+    </button>
+  </nav>
+}

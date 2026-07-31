@@ -1,0 +1,76 @@
+/* Overlay and card chrome from the design template's modal. */
+
+$ease: cubic-bezier(0.25, 1, 0.5, 1);
+
+:host {
+  display: contents;
+}
+
+/* The dialog itself is the full-viewport overlay: the dim and the blur live here
+   so ::backdrop can stay out of it. `display` must only be set on [open],
+   or the UA rule that hides a closed dialog is lost. */
+.overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 32px;
+  border: none;
+  overflow: hidden;
+  background: rgba(25, 25, 25, 0.55);
+  backdrop-filter: blur(8px);
+  color: var(--ink);
+}
+
+.overlay[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInUp 0.3s $ease both;
+}
+
+.card {
+  width: 100%;
+  max-width: 640px;
+  max-height: 82vh;
+  overflow-y: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 44px;
+  animation: fadeInUp 0.4s $ease both;
+}
+
+.card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.close {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close:hover {
+  color: var(--accent);
+}
+
+/* Visible focus ring - the template killed outlines with all: unset. */
+.close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

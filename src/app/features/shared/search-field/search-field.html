@@ -1,0 +1,11 @@
+<input
+  #field
+  type="search"
+  class="field"
+  [value]="value()"
+  [disabled]="disabled()"
+  [attr.placeholder]="placeholder() || null"
+  [attr.aria-label]="label()"
+  (input)="onInput(field.value)"
+  (blur)="onBlur()"
+/>
