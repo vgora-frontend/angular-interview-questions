@@ -12,6 +12,17 @@
       "dark": "Switch to dark theme"
     }
   },
+  "hero": {
+    "title": {
+      "lead": "Sharp answers to the questions",
+      "accent": "Angular interviews",
+      "tail": "actually ask."
+    },
+    "lede": "A curated, evolving reference - from Signals to zoneless change detection. Placeholder content shown; final Q&A coming soon.",
+    "practice": "Practice a random question",
+    "quickFire": "Quick-fire card",
+    "quickFireSoon": "Arrives with the quiz cards"
+  },
   "feed": {
     "sectionLabel": "Questions and answers",
     "tabsLabel": "Filter by category",

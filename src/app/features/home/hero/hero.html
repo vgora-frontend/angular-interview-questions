@@ -1,0 +1,31 @@
+<!-- Decorative: the template's oversized "ng" bleeding behind the headline. -->
+<div class="ghost" aria-hidden="true">ng</div>
+<div class="rule" aria-hidden="true"></div>
+
+<!-- Three fragments rather than one string: the accent phrase sits inside the
+     sentence, and each language puts it in a different place.
+     The two lines are blocks, not a <br>: Angular drops the whitespace-only node
+     next to a <br>, which glues "questions" to "Angular" for a screen reader. -->
+<h1 class="title">
+  <span class="line">{{ 'hero.title.lead' | transloco }}</span>
+  <span class="line">
+    <span class="ital">{{ 'hero.title.accent' | transloco }}</span>
+    {{ 'hero.title.tail' | transloco }}
+  </span>
+</h1>
+
+<p class="lede">{{ 'hero.lede' | transloco }}</p>
+
+<div class="cta">
+  <!-- Random question -->
+  <button type="button" class="btn-solid" (click)="practice.openRandomQuestion()">
+    {{ 'hero.practice' | transloco }}
+  </button>
+
+  <!-- Quick-fire cards arrive with the quiz module. Disabled until then, and the
+       reason is named next to it rather than left for the user to guess. -->
+  <button type="button" class="btn-ghost" disabled aria-describedby="quick-fire-soon">
+    {{ 'hero.quickFire' | transloco }}
+  </button>
+  <span class="soon" id="quick-fire-soon">{{ 'hero.quickFireSoon' | transloco }}</span>
+</div>

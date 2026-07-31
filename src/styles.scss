@@ -15,6 +15,12 @@
      a tint written as a literal would keep the light accent in dark mode. */
   --accent-tint: rgba(193, 95, 60, 0.08); /* hover fill on accent-outlined buttons */
   --accent-selection: rgba(193, 95, 60, 0.18); /* ::selection */
+  --accent-shadow: rgba(193, 95, 60, 0.28); /* lift under the primary CTA on hover */
+  /* Filled-button pair. The template puts #FBF9F6 on --accent, which is 4.02:1 and
+     fails AA for text, so the fill darkens here (4.72:1) exactly as --muted did.
+     On dark surfaces the accent is light enough that the ink flips instead. */
+  --accent-solid: #b05636;
+  --on-accent: #fbf9f6;
   --muted: #6e655a; /* darkened from #8A8072 -> passes WCAG AA (see guide section 12) */
   --border: #e8e2d5;
   --glass: rgba(251, 249, 246, 0.72);
@@ -35,7 +41,8 @@
   /* Type scale (theme-independent).
      Steps, not roles: 12px is the count, the tab divider and the secondary buttons alike,
      so a role name would fit one caller and mislead the next.
-     Components pick a step - none declare their own px.
+     Components pick a step - the only raw px left are one-off decorative sizes,
+     such as the hero's 300px watermark, which are not type at all.
      The template had 13 sizes for 24 call sites, including 12.5, 13.5 and 19;
      those three are folded into the neighbouring step (see the commit). */
   --text-3xs: 11px; /* mono category tags */
@@ -48,6 +55,7 @@
   --text-2xl: 20px; /* serif: brand, accordion marker */
   --text-3xl: 22px; /* serif: modal close */
   --text-4xl: 26px; /* serif: modal question */
+  --text-5xl: 46px; /* serif: page headline */
 
   /* Motion (theme-independent). Named by speed rather than by purpose:
      the same 0.3s covers every hover colour change, and 0.35s every theme swap. */
@@ -74,6 +82,9 @@
   --accent: #d9915f; /* warmer accent the template uses on dark surfaces */
   --accent-tint: rgba(217, 145, 95, 0.08);
   --accent-selection: rgba(217, 145, 95, 0.18);
+  --accent-shadow: rgba(217, 145, 95, 0.28);
+  --accent-solid: var(--accent); /* already light enough - 6.89:1 with the ink below */
+  --on-accent: #1a1815;
   --muted: #9a8f7e;
   --border: #322e28;
   --glass: rgba(26, 24, 21, 0.72);
