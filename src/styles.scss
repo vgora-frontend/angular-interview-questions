@@ -102,6 +102,13 @@ body {
   padding: 0;
 }
 
+/* In-page links glide instead of jumping - the header's About goes to #author.
+   On the scrolling element, so it covers anchors and programmatic scrolls alike;
+   the reduced-motion block below turns it back off. */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--bg);
   color: var(--ink);
@@ -184,5 +191,11 @@ a:hover {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  /* A long smooth scroll is exactly the vestibular trigger this query is for.
+     Not covered by the durations above: scroll-behavior is its own property. */
+  html {
+    scroll-behavior: auto;
   }
 }
