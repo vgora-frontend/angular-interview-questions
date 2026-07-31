@@ -23,6 +23,10 @@
     "quickFire": "Quick-fire card",
     "quickFireSoon": "Arrives with the quiz cards"
   },
+  "author": {
+    "name": "Vitalii Gora",
+    "role": "Frontend Developer | Angular Specialist (AngularJS -> 22) | Legacy-to-modern migrations"
+  },
   "feed": {
     "sectionLabel": "Questions and answers",
     "tabsLabel": "Filter by category",

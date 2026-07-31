@@ -1,0 +1,68 @@
+/* Spacing mirrors the design template's author row;
+   type sizes, colours and durations come from the tokens in styles.scss. */
+
+:host {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 40px;
+}
+
+/* The source is 256px square for sharpness on dense screens;
+   52px is what it renders at, and NgOptimizedImage needs both numbers to reserve the box. */
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+
+/* Takes the middle, and wraps below the avatar before the text gets squeezed. */
+.identity {
+  flex: 1;
+  min-width: 240px;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+}
+
+.role {
+  margin: 3px 0 0;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+  font-size: var(--text-xs);
+  letter-spacing: 0.03em;
+}
+
+/* The colour on hover is the global `a:hover` rule;
+   only the rule under the label belongs to this component. */
+.links a {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition:
+    color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
+}
+
+.links a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* Visible focus ring - the template killed outlines with all: unset. */
+.links a:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-focus);
+}

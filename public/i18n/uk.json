@@ -23,6 +23,10 @@
     "quickFire": "Швидка картка",
     "quickFireSoon": "З'явиться разом із картками квізу"
   },
+  "author": {
+    "name": "Віталій Гора",
+    "role": "Frontend-розробник | спеціаліст з Angular (AngularJS -> 22) | міграції з legacy на сучасний стек"
+  },
   "feed": {
     "sectionLabel": "Питання та відповіді",
     "tabsLabel": "Фільтр за категорією",
