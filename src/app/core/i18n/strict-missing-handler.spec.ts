@@ -4,7 +4,7 @@ import {
   TranslocoService,
   TranslocoTestingModule,
 } from '@jsverse/transloco';
-import { DEFAULT_LANG, LANGS } from '../models/content.model';
+import { DEFAULT_LANG, LANGS } from '../models/language.model';
 import { StrictMissingHandler } from './strict-missing-handler';
 
 // Tests run with ngDevMode on, so the handler always takes its dev branch here.
@@ -13,7 +13,7 @@ describe('StrictMissingHandler', () => {
     TestBed.configureTestingModule({
       imports: [
         TranslocoTestingModule.forRoot({
-          langs: { en: { header: { controls: 'Site controls' } }, ua: {} },
+          langs: { en: { header: { controls: 'Site controls' } }, uk: {} },
           translocoConfig: { availableLangs: [...LANGS], defaultLang: DEFAULT_LANG },
           preloadLangs: true,
         }),

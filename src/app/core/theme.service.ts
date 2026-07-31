@@ -1,13 +1,6 @@
-import {
-  Injectable,
-  PLATFORM_ID,
-  computed,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
+import { Injectable, PLATFORM_ID, computed, effect, inject, signal } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Theme, isTheme } from './models/content.model';
+import { Theme, isTheme } from './models/theme.model';
 
 const STORAGE_KEY = 'theme';
 

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { App } from './app';
-import { DEFAULT_LANG, LANGS } from './core/models/content.model';
+import { DEFAULT_LANG, LANGS } from './core/models/language.model';
 
 describe('App', () => {
   beforeEach(async () => {

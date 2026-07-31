@@ -6,7 +6,7 @@ import { provideTransloco, provideTranslocoMissingHandler } from '@jsverse/trans
 import { routes } from './app.routes';
 import { TranslocoHttpLoader } from './core/i18n/transloco-loader';
 import { StrictMissingHandler } from './core/i18n/strict-missing-handler';
-import { DEFAULT_LANG, LANGS } from './core/models/content.model';
+import { DEFAULT_LANG, LANGS } from './core/models/language.model';
 
 export const appConfig: ApplicationConfig = {
   providers: [

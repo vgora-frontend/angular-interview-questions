@@ -9,7 +9,7 @@
           [attr.aria-pressed]="lang() === code"
           (click)="setLang(code)"
         >
-          {{ code.toUpperCase() }}
+          {{ labels[code] }}
         </button>
         @if (!last) {
           <span aria-hidden="true">|</span>

@@ -1,21 +1,30 @@
-// Derive the unions from a single source (`as const`) so the allowed values and
-// the type can never drift apart - no scattered magic strings.
-export const LANGS = ['en', 'ua'] as const;
-const THEMES = ['light', 'dark'] as const;
+import { Localized } from './language.model';
 
-export type Lang = (typeof LANGS)[number]; // 'en' | 'ua'
-export type Theme = (typeof THEMES)[number]; // 'light' | 'dark'
+// Every question belongs to exactly one of these.
+// Written `as const` so the keys double as a type:
+// a typo in a data file then fails to compile instead of
+// producing a question that shows up under 'all' and in no tab.
+export const CATEGORY_KEYS = ['signals', 'cd', 'rxjs', 'forms'] as const;
 
-// Fallback language when nothing is stored (deliberate default, not LANGS[0]).
-export const DEFAULT_LANG: Lang = 'en';
+export type CategoryKey = (typeof CATEGORY_KEYS)[number];
 
-// Narrow a stored string (e.g. from localStorage) to a supported union member.
-// Built from the same `as const` source, so adding a value updates these too.
-const LANG_SET: ReadonlySet<string> = new Set<string>(LANGS);
-const THEME_SET: ReadonlySet<string> = new Set<string>(THEMES);
+// The reset tab.
+// It is a Category.key and a filter value, but never a Question.category:
+// it matches every question rather than one group.
+export const ALL_CATEGORIES = 'all';
 
-export const isLang = (value: string | null): value is Lang =>
-  value !== null && LANG_SET.has(value);
+export type CategoryFilter = CategoryKey | typeof ALL_CATEGORIES;
 
-export const isTheme = (value: string | null): value is Theme =>
-  value !== null && THEME_SET.has(value);
+export interface Category {
+  key: CategoryFilter;
+  label: Localized;
+  divider?: boolean; // render a separator before this tab
+}
+
+export interface Question {
+  id: string;
+  category: CategoryKey;
+  q: Localized;
+  a: Localized;
+  code?: string; // optional snippet, shown under the answer
+}
