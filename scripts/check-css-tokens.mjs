@@ -6,54 +6,39 @@
  *
  * Definitions are collected from every `src/**\/*.scss` file; any `var(--name)`
  * that does not match a defined `--name:` declaration is reported as an error.
+ * References inside comments are ignored, so documentation may show examples.
+ *
+ * The parsing lives in ./lib (and is tested by `npm run test:scripts`);
+ * this file only reads the project and prints.
  */
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { definedTokens, tokenReferences } from './lib/css.mjs';
+import { filesWithin } from './lib/files.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const SRC = join(ROOT, 'src');
 
-function scssFiles(dir) {
-  const found = [];
-  for (const entry of readdirSync(dir)) {
-    const full = join(dir, entry);
-    if (statSync(full).isDirectory()) {
-      found.push(...scssFiles(full));
-    } else if (full.endsWith('.scss')) {
-      found.push(full);
-    }
-  }
-  return found;
-}
+const sheets = filesWithin(SRC, ['.scss']).map((file) => ({
+  file: relative(ROOT, file),
+  text: readFileSync(file, 'utf8'),
+}));
 
-const stripBlockComments = (text) => text.replace(/\/\*[\s\S]*?\*\//g, '');
-const stripInlineComments = (line) =>
-  line.replace(/\/\*.*?\*\//g, '').replace(/\/\/.*$/, '');
-
-const files = scssFiles(SRC);
-
-// 1. Every defined custom property (a `--name:` declaration, not a var() use).
 const defined = new Set();
-for (const file of files) {
-  const content = stripBlockComments(readFileSync(file, 'utf8'));
-  for (const match of content.matchAll(/(--[\w-]+)\s*:/g)) {
-    defined.add(match[1]);
+for (const { text } of sheets) {
+  for (const token of definedTokens(text)) {
+    defined.add(token);
   }
 }
 
-// 2. Every var(--name) reference; flag any name that was never defined.
-const usageRe = /var\(\s*(--[\w-]+)/g;
 const errors = [];
-for (const file of files) {
-  const lines = readFileSync(file, 'utf8').split('\n');
-  lines.forEach((line, index) => {
-    for (const match of stripInlineComments(line).matchAll(usageRe)) {
-      if (!defined.has(match[1])) {
-        errors.push({ file: relative(ROOT, file), line: index + 1, token: match[1] });
-      }
+for (const { file, text } of sheets) {
+  for (const { token, line } of tokenReferences(text)) {
+    if (!defined.has(token)) {
+      errors.push({ file, line, token });
     }
-  });
+  }
 }
 
 if (errors.length > 0) {

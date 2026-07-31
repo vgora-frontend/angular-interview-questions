@@ -1,0 +1,12 @@
+{
+  "$schema": "https://docs.fallow.tools/schema/fallow.schema.json",
+  "health": {
+    "thresholdOverrides": [
+      {
+        "files": ["**/*.spec.ts", "**/*.test.mjs"],
+        "maxUnitSize": 200,
+        "reason": "A describe() callback is a container, not a unit of logic: its length is just how many tests the file holds. Splitting a spec file to satisfy a line count fragments the suite without simplifying anything. Cyclomatic, cognitive and CRAP limits still apply here, so genuinely complex test helpers are still reported.",
+      },
+    ],
+  },
+}

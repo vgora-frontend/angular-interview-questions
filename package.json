@@ -12,7 +12,8 @@
     "build": "ng build",
     "prewatch": "npm run check",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:scripts": "node --test \"scripts/**/*.test.mjs\""
   },
   "private": true,
   "packageManager": "npm@10.9.8",
