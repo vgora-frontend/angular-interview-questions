@@ -14,5 +14,34 @@
   },
   "shell": {
     "placeholder": "Shell is live. Use the header to flip the theme and switch language - the home feature is coming next."
+  },
+  "feed": {
+    "sectionLabel": "Questions and answers",
+    "tabsLabel": "Filter by category",
+    "random": "Random question",
+    "empty": "Nothing matches \"{{term}}\" - try another term.",
+    "search": {
+      "placeholder": "Search questions...",
+      "label": "Search questions"
+    },
+    "count": {
+      "one": "{{count}} question",
+      "few": "{{count}} questions",
+      "many": "{{count}} questions",
+      "other": "{{count}} questions"
+    }
+  },
+  "pagination": {
+    "label": "Pagination",
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "modal": {
+    "close": "Close"
+  },
+  "practice": {
+    "reveal": "Reveal answer",
+    "another": "Another question",
+    "quickFire": "Try a quick-fire card"
   }
 }

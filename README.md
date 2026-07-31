@@ -43,7 +43,7 @@ src/app/
     theme.service.ts    # light/dark theme (system default + storage)
   features/shared/
     header/             # site header: theme + language controls
-public/i18n/            # en.json, ua.json translation catalogues
+public/i18n/            # en.json, uk.json translation catalogues
 scripts/                # check-css-tokens.mjs (pre-build guard)
 ```
 
