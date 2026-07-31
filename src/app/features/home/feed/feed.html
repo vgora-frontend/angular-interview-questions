@@ -1,0 +1,36 @@
+<div class="toolbar">
+  <app-search-field
+    class="search"
+    [formControl]="search"
+    [label]="'feed.search.label' | transloco"
+    [placeholder]="'feed.search.placeholder' | transloco"
+  />
+  <!-- Number of questions -->
+  <span class="count">
+    {{ 'feed.count.' + countForm() | transloco: { count: count() } }}
+  </span>
+  <!-- Random question -->
+  <button type="button" class="pill" (click)="practice.openRandomQuestion()">
+    {{ 'feed.random' | transloco }}
+  </button>
+</div>
+
+<app-filter-tabs
+  [tabs]="tabs()"
+  [(active)]="activeCategory"
+  [label]="'feed.tabsLabel' | transloco"
+/>
+
+<div class="rows">
+  @for (question of visible(); track question.id) {
+    <app-question-row
+      [question]="question"
+      [open]="isOpen(question.id)"
+      (toggled)="toggle(question.id)"
+    />
+  } @empty {
+    <p class="empty">{{ 'feed.empty' | transloco: { term: term() } }}</p>
+  }
+</div>
+
+<app-pagination [(page)]="page" [totalPages]="totalPages()" />

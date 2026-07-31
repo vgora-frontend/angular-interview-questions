@@ -12,9 +12,6 @@
       "dark": "Switch to dark theme"
     }
   },
-  "shell": {
-    "placeholder": "Shell is live. Use the header to flip the theme and switch language - the home feature is coming next."
-  },
   "feed": {
     "sectionLabel": "Questions and answers",
     "tabsLabel": "Filter by category",
