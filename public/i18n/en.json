@@ -43,6 +43,12 @@
       "other": "{{count}} questions"
     }
   },
+  "timeline": {
+    "eyebrow": "What changed, when",
+    "heading": "The version timeline",
+    "railLabel": "Choose an Angular version",
+    "soon": "Highlights for this release are on the way."
+  },
   "pagination": {
     "label": "Pagination",
     "prev": "Prev",

@@ -1,0 +1,42 @@
+<p class="eyebrow">{{ 'timeline.eyebrow' | transloco }}</p>
+<h2 class="heading">{{ 'timeline.heading' | transloco }}</h2>
+
+<!-- Same contract as <app-filter-tabs>: a labelled group of single-select buttons,
+     with the pressed state on the button rather than on a wrapper. -->
+<div class="rail" role="group" [attr.aria-label]="'timeline.railLabel' | transloco">
+  @for (version of versions(); track version.id) {
+    <button
+      type="button"
+      class="version"
+      [class.active]="selected() === version.id"
+      [attr.aria-pressed]="selected() === version.id"
+      (click)="select(version.id)"
+    >
+      {{ version.label }}
+    </button>
+  }
+</div>
+
+@for (version of shown(); track version.id) {
+  <div class="panel">
+    <div class="panel-head">
+      <span class="title">{{ version.title }}</span>
+      <span class="year">{{ version.year }}</span>
+    </div>
+
+    @if (version.points; as points) {
+      <div class="points">
+        @for (point of points; track point.head) {
+          <div class="point">
+            <span class="dash" aria-hidden="true"></span>
+            <p class="text">
+              <strong>{{ point.head }}</strong> - {{ point.body }}
+            </p>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="soon">{{ 'timeline.soon' | transloco }}</p>
+    }
+  </div>
+}

@@ -1,0 +1,134 @@
+/* Spacing mirrors the design template's timeline module;
+   type sizes, colours and easing come from the tokens in styles.scss. */
+
+:host {
+  display: block;
+  margin-bottom: var(--section-gap);
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  font-size: var(--text-3xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.heading {
+  margin: 0 0 34px;
+  font-family: var(--font-serif);
+  font-size: var(--text-5xl);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* The rail carries the rule; each button's own 1.5px border sits on top of it,
+   which is what the -1px margin is for. */
+.rail {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 40px;
+  row-gap: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.version {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid transparent;
+  padding: 0 0 12px;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.version:hover {
+  color: var(--accent);
+}
+
+.version.active {
+  font-weight: 500;
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+/* Visible focus ring - the template killed outlines with all: unset. */
+.version:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-focus);
+}
+
+/* Re-rendered on every version change (see `shown` in the component), so this
+   plays each time the reader picks another release. */
+.panel {
+  padding-top: 34px;
+  animation: fadeInUp 0.4s var(--ease) both;
+}
+
+.panel-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: 500;
+}
+
+.year {
+  font-size: var(--text-2xs);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: var(--reading-max-width);
+}
+
+.point {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+/* Decorative dash, nudged up onto the first line's baseline. */
+.dash {
+  width: 18px;
+  height: 1px;
+  flex-shrink: 0;
+  background: var(--accent);
+  transform: translateY(-4px);
+}
+
+.text {
+  margin: 0;
+  font-size: var(--text-md);
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.text strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.soon {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-md);
+  color: var(--muted);
+}

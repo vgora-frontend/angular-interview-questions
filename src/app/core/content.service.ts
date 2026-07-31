@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { CATEGORIES, CATEGORY_TAGS, QUESTIONS } from './data/content.data';
+import { VERSIONS } from './data/versions.data';
 import { CategoryKey } from './models/content.model';
 
 // The single read path to the content. Components inject this instead of
@@ -9,6 +10,7 @@ import { CategoryKey } from './models/content.model';
 export class ContentService {
   readonly questions = signal(QUESTIONS).asReadonly();
   readonly categories = signal(CATEGORIES).asReadonly();
+  readonly versions = signal(VERSIONS).asReadonly();
 
   // The mono label a question's row shows. Total by construction: CATEGORY_TAGS
   // covers every CategoryKey, so there is no missing-tag case to fall back from.

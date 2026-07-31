@@ -28,3 +28,21 @@ export interface Question {
   a: Localized;
   code?: string; // optional snippet, shown under the answer
 }
+
+// One bullet under a release: a bolded head and the sentence that follows it.
+export interface VersionPoint {
+  head: Localized;
+  body: Localized;
+}
+
+// A release on the timeline.
+// `title` and `points` are optional on purpose: every version is listed from the
+// start, and their highlights are written one release at a time. A version with
+// nothing written yet renders the "on the way" note instead of an empty panel.
+export interface VersionEntry {
+  id: string; // 'angularjs', 'v2' ... 'v22'
+  label: string; // rail label - a version number reads the same in both languages
+  year: number; // release year; a numeral, so it needs no translation
+  title?: Localized;
+  points?: VersionPoint[];
+}
