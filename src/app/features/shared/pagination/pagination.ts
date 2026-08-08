@@ -50,13 +50,7 @@ export class PaginationComponent {
     if (page >= total - 3) {
       return [slot(1), gap('gap-start'), ...range(total - 4, total)];
     }
-    return [
-      slot(1),
-      gap('gap-start'),
-      ...range(page - 1, page + 1),
-      gap('gap-end'),
-      slot(total),
-    ];
+    return [slot(1), gap('gap-start'), ...range(page - 1, page + 1), gap('gap-end'), slot(total)];
   });
 
   // Clamped here so hosts can wire prev/next arithmetic without re-checking it.

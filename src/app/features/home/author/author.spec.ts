@@ -5,6 +5,7 @@ import { AuthorComponent } from './author';
 
 const TRANSLATIONS = {
   author: {
+    credit: 'Questions curated and rewritten from',
     name: 'Vitalii Gora',
     role: 'Frontend Developer | Angular Specialist',
   },
@@ -41,6 +42,17 @@ describe('AuthorComponent', () => {
     expect(host.querySelector('.role')?.textContent?.trim()).toBe(
       'Frontend Developer | Angular Specialist',
     );
+  });
+
+  // The source repository ships no licence file, so the credit is load-bearing
+  // rather than decorative: a test keeps it from being dropped by accident.
+  it('credits the source of the question set', () => {
+    const credit = host.querySelector('.credit')!;
+    const anchor = credit.querySelector<HTMLAnchorElement>('a')!;
+
+    expect(credit.textContent).toContain('Questions curated and rewritten from');
+    expect(anchor.href).toBe('https://github.com/sudheerj/angular-interview-questions');
+    expect(anchor.rel).toBe('noopener');
   });
 
   it('reserves the avatar box and leaves its alt empty', () => {

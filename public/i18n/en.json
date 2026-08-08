@@ -18,12 +18,13 @@
       "accent": "Angular interviews",
       "tail": "actually ask."
     },
-    "lede": "A curated, evolving reference - from Signals to zoneless change detection. The question bank is in; answers are being written one at a time.",
+    "lede": "A curated, evolving reference - from Signals to zoneless change detection. Every question answered, every answer with a worked example, in English and Ukrainian.",
     "practice": "Practice a random question",
     "quickFire": "Quick-fire card",
     "quickFireSoon": "Arrives with the quiz cards"
   },
   "author": {
+    "credit": "Questions curated and rewritten from",
     "name": "Vitalii Gora",
     "role": "Frontend Developer | Angular Specialist (AngularJS -> 22) | Legacy-to-modern migrations"
   },

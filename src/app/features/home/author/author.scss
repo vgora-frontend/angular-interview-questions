@@ -60,8 +60,33 @@
   border-bottom-color: var(--accent);
 }
 
+/* flex-basis: 100% drops it onto its own line below the row,
+   rather than competing with the links for horizontal space. */
+.credit {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: var(--text-2xs);
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.credit a {
+  color: inherit;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1px;
+  transition:
+    color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
+}
+
+.credit a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 /* Visible focus ring - the template killed outlines with all: unset. */
-.links a:focus-visible {
+.links a:focus-visible,
+.credit a:focus-visible {
   outline: var(--focus-ring);
   outline-offset: var(--focus-offset);
   border-radius: var(--radius-focus);
