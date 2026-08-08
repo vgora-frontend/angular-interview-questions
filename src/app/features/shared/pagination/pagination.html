@@ -4,16 +4,21 @@
       {{ 'pagination.prev' | transloco }}
     </button>
     <div class="page-list">
-      @for (number of pages(); track number) {
-        <button
-          type="button"
-          class="page-number"
-          [class.active]="page() === number"
-          [attr.aria-current]="page() === number ? 'page' : null"
-          (click)="go(number)"
-        >
-          {{ number }}
-        </button>
+      @for (slot of slots(); track slot.key) {
+        @if (slot.page; as number) {
+          <button
+            type="button"
+            class="page-number"
+            [class.active]="page() === number"
+            [attr.aria-current]="page() === number ? 'page' : null"
+            (click)="go(number)"
+          >
+            {{ number }}
+          </button>
+        } @else {
+          <!-- Decorative: prev/next and the numbers around it reach every page. -->
+          <span class="gap" aria-hidden="true">...</span>
+        }
       }
     </div>
     <button

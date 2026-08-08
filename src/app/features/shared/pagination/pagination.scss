@@ -55,6 +55,14 @@
   gap: 18px;
 }
 
+/* Stands in for the pages the window skips. */
+.gap {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--border);
+  letter-spacing: 0.08em;
+}
+
 .page-number {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);

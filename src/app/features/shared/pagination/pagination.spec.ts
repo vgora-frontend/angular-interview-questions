@@ -53,6 +53,56 @@ describe('PaginationComponent', () => {
     expect(host.querySelector('.pager')?.getAttribute('aria-label')).toBe('Pagination');
   });
 
+  // 58 pages is what 346 questions come to, so the list has to stay a fixed
+  // width instead of rendering a button per page.
+  describe('windowing', () => {
+    // What the row reads as, gaps included, so a slipped gap is visible here.
+    const row = () =>
+      Array.from(host.querySelectorAll<HTMLElement>('.page-number, .gap')).map((element) =>
+        element.textContent?.trim(),
+      );
+
+    it('lists every page while they still fit', async () => {
+      await render(1, 7);
+
+      expect(row()).toEqual(['1', '2', '3', '4', '5', '6', '7']);
+    });
+
+    it('anchors the window to the start near the first page', async () => {
+      await render(3, 58);
+
+      expect(row()).toEqual(['1', '2', '3', '4', '5', '...', '58']);
+    });
+
+    it('centres the window on the current page in the middle', async () => {
+      await render(30, 58);
+
+      expect(row()).toEqual(['1', '...', '29', '30', '31', '...', '58']);
+    });
+
+    it('anchors the window to the end near the last page', async () => {
+      await render(56, 58);
+
+      expect(row()).toEqual(['1', '...', '54', '55', '56', '57', '58']);
+    });
+
+    it('keeps the row the same width wherever the page sits', async () => {
+      for (const page of [1, 4, 5, 29, 54, 55, 58]) {
+        await render(page, 58);
+
+        expect(row(), `page ${page}`).toHaveLength(7);
+        expect(labels(), `page ${page}`).toContain(String(page));
+      }
+    });
+
+    it('always keeps the first and last page one click away', async () => {
+      await render(30, 58);
+
+      expect(labels()).toContain('1');
+      expect(labels()).toContain('58');
+    });
+  });
+
   it('marks the current page for sighted and assistive users alike', async () => {
     await render(2, 3);
 
