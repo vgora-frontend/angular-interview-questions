@@ -21,7 +21,9 @@ const QUESTIONS: Question[] = [
   question('q2', 'signals', 'computed laziness'),
   question('q3', 'signals', 'linkedSignal'),
   question('q4', 'signals', 'effects'),
-  question('q5', 'signals', 'untracked'),
+  // Unanswered on purpose: the bank is written before it is answered, so the
+  // feed has to search and render a question that has no answer text at all.
+  { ...question('q5', 'signals', 'untracked'), a: undefined },
   question('q6', 'rxjs', 'switchMap'),
   question('q7', 'rxjs', 'takeUntilDestroyed'),
   question('q8', 'rxjs', 'toSignal'),
@@ -38,6 +40,7 @@ const TRANSLATIONS = {
     sectionLabel: 'Questions',
     tabsLabel: 'Filter',
     random: 'Random',
+    soon: 'SOON',
     empty: 'Nothing matches "{{term}}"',
     search: { placeholder: 'Search', label: 'Search questions' },
     count: {
@@ -144,6 +147,14 @@ describe('FeedComponent', () => {
 
       await type('answer about toSignal');
       expect(rowIds()).toEqual(['row-q8']);
+    });
+
+    it('finds an unanswered question by its question text alone', async () => {
+      await type('untracked');
+
+      expect(rowIds()).toEqual(['row-q5']);
+      expect(host.querySelector('#row-q5 .row-head')).toBeNull();
+      expect(host.querySelector('#row-q5 .soon')).not.toBeNull();
     });
 
     it('shows the empty state with the term when nothing matches', async () => {

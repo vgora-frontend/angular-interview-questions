@@ -22,12 +22,21 @@ const WITHOUT_CODE: Question = {
   a: { en: 'reset() returns the initial value.', uk: 'reset() returns the initial value.' },
 };
 
+// Unanswered on purpose: a question can reach the modal before its answer
+// is written, and then there is nothing to reveal.
+const UNANSWERED: Question = {
+  id: 'q3',
+  category: 'signals',
+  q: { en: 'What does untracked() do?', uk: 'What does untracked() do?' },
+};
+
 const TRANSLATIONS = {
   modal: { close: 'Close' },
   practice: {
     reveal: 'Reveal answer',
     another: 'Another question',
     quickFire: 'Try a quick-fire card',
+    soon: 'Answer coming soon.',
   },
 };
 
@@ -64,7 +73,7 @@ describe('PracticeModalComponent', () => {
         {
           provide: ContentService,
           useValue: {
-            questions: signal([WITH_CODE, WITHOUT_CODE]).asReadonly(),
+            questions: signal([WITH_CODE, WITHOUT_CODE, UNANSWERED]).asReadonly(),
             categories: signal([]).asReadonly(),
             tagFor: (category: CategoryKey) => category.toUpperCase(),
           },
@@ -90,7 +99,8 @@ describe('PracticeModalComponent', () => {
 
     beforeEach(async () => {
       // Always picks index 0 of the pool it is handed, so the first open is
-      // WITH_CODE and any re-roll (which excludes the current one) is the other.
+      // WITH_CODE and a re-roll (which excludes the current one) is WITHOUT_CODE.
+      // A test that wants the last candidate raises the value itself.
       vi.spyOn(Math, 'random').mockReturnValue(0);
       practice.openRandomQuestion();
       await fixture.whenStable();
@@ -132,6 +142,19 @@ describe('PracticeModalComponent', () => {
       expect(practice.question()).toBe(WITHOUT_CODE);
       expect(host.querySelector('.text')).not.toBeNull();
       expect(host.querySelector('.code')).toBeNull();
+    });
+
+    it('offers nothing to reveal while a question is unanswered', async () => {
+      // 0.99 of two candidates lands on the last one, so the re-roll is UNANSWERED.
+      vi.spyOn(Math, 'random').mockReturnValue(0.99);
+      practice.openRandomQuestion();
+      await fixture.whenStable();
+
+      expect(practice.question()).toBe(UNANSWERED);
+      expect(host.querySelector('.q')?.textContent?.trim()).toBe('What does untracked() do?');
+      expect(host.querySelector('.answer')).toBeNull();
+      expect(host.querySelector('.reveal')).toBeNull();
+      expect(host.querySelector('.soon')?.textContent?.trim()).toBe('Answer coming soon.');
     });
 
     it('re-rolls from the footer, hiding the answer again', async () => {

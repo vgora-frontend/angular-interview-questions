@@ -18,7 +18,7 @@
       "accent": "Angular interviews",
       "tail": "actually ask."
     },
-    "lede": "A curated, evolving reference - from Signals to zoneless change detection. Placeholder content shown; final Q&A coming soon.",
+    "lede": "A curated, evolving reference - from Signals to zoneless change detection. The question bank is in; answers are being written one at a time.",
     "practice": "Practice a random question",
     "quickFire": "Quick-fire card",
     "quickFireSoon": "Arrives with the quiz cards"
@@ -31,6 +31,7 @@
     "sectionLabel": "Questions and answers",
     "tabsLabel": "Filter by category",
     "random": "Random question",
+    "soon": "SOON",
     "empty": "Nothing matches \"{{term}}\" - try another term.",
     "search": {
       "placeholder": "Search questions...",
@@ -59,6 +60,7 @@
   },
   "practice": {
     "reveal": "Reveal answer",
+    "soon": "The answer to this one is still being written.",
     "another": "Another question",
     "quickFire": "Try a quick-fire card"
   }

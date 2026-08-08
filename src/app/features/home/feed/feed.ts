@@ -75,7 +75,11 @@ export class FeedComponent {
       if (term === '') {
         return true;
       }
-      return `${t(question.q)} ${t(question.a)}`.toLowerCase().includes(term);
+      // The answer is optional while the bank is being written, so an
+      // unanswered question is searchable by its question text alone.
+      const answer = question.a;
+      const haystack = answer === undefined ? t(question.q) : `${t(question.q)} ${t(answer)}`;
+      return haystack.toLowerCase().includes(term);
     });
   });
 

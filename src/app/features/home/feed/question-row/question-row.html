@@ -1,31 +1,42 @@
-<button
-  type="button"
-  class="row-head"
-  [attr.aria-expanded]="open()"
-  [attr.aria-controls]="panelId()"
-  (click)="toggled.emit()"
->
-  <span class="head-text">
-    <span class="tag">{{ tag() }}</span>
-    <span class="q" [id]="labelId()">{{ t(question().q) }}</span>
-  </span>
-  <span class="icon" aria-hidden="true" [class.open]="open()">+</span>
-</button>
+@if (question().a; as answer) {
+  <button
+    type="button"
+    class="row-head"
+    [attr.aria-expanded]="open()"
+    [attr.aria-controls]="panelId()"
+    (click)="toggled.emit()"
+  >
+    <span class="head-text">
+      <span class="tag">{{ tag() }}</span>
+      <span class="q" [id]="labelId()">{{ t(question().q) }}</span>
+    </span>
+    <span class="icon" aria-hidden="true" [class.open]="open()">+</span>
+  </button>
 
-<div
-  class="panel"
-  role="region"
-  [id]="panelId()"
-  [class.open]="open()"
-  [attr.aria-labelledby]="labelId()"
-  [attr.inert]="open() ? null : ''"
->
-  <div class="panel-inner">
-    <div class="panel-body">
-      <p class="answer">{{ t(question().a) }}</p>
-      @if (question().code; as code) {
-        <app-code-block [code]="code" />
-      }
+  <div
+    class="panel"
+    role="region"
+    [id]="panelId()"
+    [class.open]="open()"
+    [attr.aria-labelledby]="labelId()"
+    [attr.inert]="open() ? null : ''"
+  >
+    <div class="panel-inner">
+      <div class="panel-body">
+        <p class="answer">{{ t(answer) }}</p>
+        @if (question().code; as code) {
+          <app-code-block [code]="code" />
+        }
+      </div>
     </div>
   </div>
-</div>
+} @else {
+  <!-- Unanswered: a plain line, not an accordion that would open on nothing. -->
+  <div class="row-static">
+    <span class="head-text">
+      <span class="tag">{{ tag() }}</span>
+      <span class="q">{{ t(question().q) }}</span>
+    </span>
+    <span class="soon">{{ 'feed.soon' | transloco }}</span>
+  </div>
+}

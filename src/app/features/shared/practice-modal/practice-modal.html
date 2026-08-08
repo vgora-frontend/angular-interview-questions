@@ -5,23 +5,28 @@
   @if (practice.question(); as question) {
     <h2 class="q" id="practice-modal-title">{{ t(question.q) }}</h2>
 
-    <div
-      class="answer"
-      [class.open]="practice.revealed()"
-      [attr.inert]="practice.revealed() ? null : ''"
-    >
-      <div class="answer-inner">
-        <p class="text">{{ t(question.a) }}</p>
-        @if (question.code) {
-          <app-code-block [code]="question.code" />
-        }
+    @if (question.a; as answer) {
+      <div
+        class="answer"
+        [class.open]="practice.revealed()"
+        [attr.inert]="practice.revealed() ? null : ''"
+      >
+        <div class="answer-inner">
+          <p class="text">{{ t(answer) }}</p>
+          @if (question.code) {
+            <app-code-block [code]="question.code" />
+          }
+        </div>
       </div>
-    </div>
 
-    @if (!practice.revealed()) {
-      <button type="button" class="reveal" (click)="practice.reveal()">
-        {{ 'practice.reveal' | transloco }}
-      </button>
+      @if (!practice.revealed()) {
+        <button type="button" class="reveal" (click)="practice.reveal()">
+          {{ 'practice.reveal' | transloco }}
+        </button>
+      }
+    } @else {
+      <!-- Nothing to reveal yet: say so instead of offering a button that opens on nothing. -->
+      <p class="soon">{{ 'practice.soon' | transloco }}</p>
     }
 
     <div class="footer">

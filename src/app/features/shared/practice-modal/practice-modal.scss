@@ -149,3 +149,11 @@ app-code-block {
   outline-offset: var(--focus-offset);
   border-radius: var(--radius-focus);
 }
+
+/* Shown in place of the reveal button while a question has no answer yet. */
+.soon {
+  margin: 0;
+  font-size: var(--text-md);
+  line-height: 1.7;
+  color: var(--muted);
+}

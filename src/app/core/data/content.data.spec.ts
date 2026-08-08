@@ -14,8 +14,15 @@ const TYPOGRAPHIC = /[\u2013\u2014\u2018\u2019\u201c\u201d\u2026\u00b7\u2192]/;
 // Printable ASCII plus newline - what a code snippet may contain.
 const ASCII_ONLY = /^[\x20-\x7e\n]*$/;
 
-const localizedStrings = (question: Question): string[] =>
-  LANGS.flatMap((lang) => [question.q[lang], question.a[lang]]);
+// Every translated string a question carries. The answer is optional while the
+// bank is being written, so it contributes nothing until it exists - but once it
+// does, it is held to the same rules as the question.
+const localizedStrings = (question: Question): string[] => {
+  const answer = question.a;
+  return LANGS.flatMap((lang) =>
+    answer === undefined ? [question.q[lang]] : [question.q[lang], answer[lang]],
+  );
+};
 
 const everyString = (): string[] => [
   ...CATEGORIES.flatMap((category) => LANGS.map((lang) => category.label[lang])),
@@ -67,6 +74,14 @@ describe('content data', () => {
   it('keeps typographic punctuation out of the content', () => {
     for (const text of everyString()) {
       expect(text).not.toMatch(TYPOGRAPHIC);
+    }
+  });
+
+  it('never carries a code snippet without the answer it illustrates', () => {
+    for (const question of QUESTIONS) {
+      if (question.code !== undefined) {
+        expect(question.a, question.id).toBeDefined();
+      }
     }
   });
 

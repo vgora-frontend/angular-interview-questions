@@ -14,6 +14,8 @@ const WITH_CODE: Question = {
 
 const WITHOUT_CODE: Question = { ...WITH_CODE, id: 'q2', code: undefined };
 
+const UNANSWERED: Question = { ...WITH_CODE, id: 'q3', a: undefined, code: undefined };
+
 describe('QuestionRowComponent', () => {
   let fixture: ComponentFixture<QuestionRowComponent>;
   let host: HTMLElement;
@@ -89,6 +91,26 @@ describe('QuestionRowComponent', () => {
 
       expect(host.querySelector('.answer')).not.toBeNull();
       expect(host.querySelector('app-code-block')).toBeNull();
+    });
+  });
+
+  describe('without an answer', () => {
+    beforeEach(() => render(UNANSWERED, false));
+
+    it('still shows the tag and the question', () => {
+      expect(host.querySelector('.tag')?.textContent?.trim()).toBe('SIGNALS');
+      expect(host.querySelector('.q')?.textContent?.trim()).toBe('What is a signal?');
+    });
+
+    it('offers no control, because there is nothing to expand', () => {
+      expect(host.querySelector('.row-head')).toBeNull();
+      expect(host.querySelector('button')).toBeNull();
+      expect(host.querySelector('.panel')).toBeNull();
+    });
+
+    it('marks the row as still to come', () => {
+      expect(host.querySelector('.row-static')).not.toBeNull();
+      expect(host.querySelector('.soon')).not.toBeNull();
     });
   });
 

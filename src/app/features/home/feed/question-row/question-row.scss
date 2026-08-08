@@ -6,7 +6,10 @@
   border-top: 1px solid var(--border);
 }
 
-.row-head {
+/* The answered row is a button, the unanswered one is not.
+   Everything that makes them the same line lives here. */
+.row-head,
+.row-static {
   display: flex;
   width: 100%;
   align-items: baseline;
@@ -15,10 +18,13 @@
   font: inherit;
   color: inherit;
   text-align: left;
+  padding: 22px 4px;
+}
+
+.row-head {
   background: transparent;
   border: none;
   border-radius: 2px;
-  padding: 22px 4px;
   cursor: pointer;
   transition: background var(--dur-medium) ease;
 }
@@ -55,6 +61,16 @@
   font-weight: 500;
   line-height: 1.35;
   text-wrap: pretty;
+}
+
+/* Stands in for the open/close icon while the answer is still unwritten,
+   and says so rather than leaving the row looking broken. */
+.soon {
+  font-family: var(--font-mono);
+  font-size: var(--text-3xs);
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
 }
 
 .icon {

@@ -4,7 +4,24 @@ import { Localized } from './language.model';
 // Written `as const` so the keys double as a type:
 // a typo in a data file then fails to compile instead of
 // producing a question that shows up under 'all' and in no tab.
-export const CATEGORY_KEYS = ['signals', 'cd', 'rxjs', 'forms'] as const;
+export const CATEGORY_KEYS = [
+  'basics',
+  'components',
+  'templates',
+  'directives',
+  'pipes',
+  'di',
+  'routing',
+  'forms',
+  'rxjs',
+  'http',
+  'signals',
+  'cd',
+  'performance',
+  'testing',
+  'security',
+  'tooling',
+] as const;
 
 export type CategoryKey = (typeof CATEGORY_KEYS)[number];
 
@@ -25,7 +42,10 @@ export interface Question {
   id: string;
   category: CategoryKey;
   q: Localized;
-  a: Localized;
+  // Optional on purpose: the question bank is written first and answered one
+  // question at a time. A row without an answer renders as a plain, unexpandable
+  // line marked "soon" rather than an accordion that opens on nothing.
+  a?: Localized;
   code?: string; // optional snippet, shown under the answer
 }
 

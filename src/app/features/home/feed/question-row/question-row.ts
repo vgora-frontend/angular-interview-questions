@@ -1,4 +1,5 @@
 import { Component, computed, inject, input, output } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { ContentService } from '../../../../core/content.service';
 import { LanguageService } from '../../../../core/language.service';
 import { Question } from '../../../../core/models/content.model';
@@ -6,9 +7,12 @@ import { CodeBlockComponent } from '../../../shared/code-block/code-block';
 
 // One question in the feed: the header button and the collapsing answer panel.
 // The feed owns which rows are open, so that survives paging and filtering.
+//
+// A question with no answer yet renders as a static line instead: an accordion
+// whose panel is empty is a control that lies about having something behind it.
 @Component({
   selector: 'app-question-row',
-  imports: [CodeBlockComponent],
+  imports: [CodeBlockComponent, TranslocoPipe],
   templateUrl: './question-row.html',
   styleUrl: './question-row.scss',
   host: {

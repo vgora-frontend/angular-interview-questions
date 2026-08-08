@@ -1,30 +1,85 @@
 import { Question } from '../../models/content.model';
 
-// Signals and derived state.
+// Signals, derived state and the signal-based component API.
 export const SIGNALS_QUESTIONS: Question[] = [
   {
-    id: 'q-signal-vs-subject',
+    id: 'q-what-is-signal',
     category: 'signals',
     q: {
-      en: 'What is a signal, and how does it differ from BehaviorSubject?',
-      uk: 'Що таке signal і чим він відрізняється від BehaviorSubject?',
+      en: 'What is a signal, and what does automatic dependency tracking mean?',
+      uk: 'Що таке signal і що означає автоматичне відстеження залежностей?',
     },
-    a: {
-      en: 'A signal is a reactive value with automatic dependency tracking: reading it inside a computed() or an effect() subscribes that consumer, so Angular knows exactly what to recompute when the value changes. A BehaviorSubject only pushes values to whoever subscribed manually - it has no notion of who read it, no glitch-free batching, and it needs explicit unsubscription. Signals are also synchronous and always hold a value, which makes them safe to read directly in templates.',
-      uk: 'Signal - це реактивне значення з автоматичним відстеженням залежностей: читання його всередині computed() або effect() підписує цього споживача, тому Angular точно знає, що перерахувати при зміні значення. BehaviorSubject лише надсилає значення тим, хто підписався вручну - він не знає, хто його прочитав, не має узгодженого батчингу і потребує явного відписування. Signal також синхронний і завжди має значення, тому його безпечно читати прямо в шаблоні.',
-    },
-    code: 'const count = signal(0);\nconst double = computed(() => count() * 2);\n\ncount.set(5);\ndouble(); // 10 - recomputed lazily, only when read',
   },
   {
-    id: 'q-computed-lazy',
+    id: 'q-signal-vs-behaviorsubject',
     category: 'signals',
     q: {
-      en: 'Why is computed() lazy and memoized?',
-      uk: 'Чому computed() є ленивим і кешованим?',
+      en: 'How does a signal differ from a BehaviorSubject?',
+      uk: 'Чим signal відрізняється від BehaviorSubject?',
     },
-    a: {
-      en: 'A computed does not run when its dependencies change - it only marks itself stale. The body runs on the next read, and the result is cached until a dependency changes again. That means a computed nobody reads costs nothing, and a computed read ten times in a template runs once. It also means the body must be pure: side effects there would fire unpredictably.',
-      uk: 'Computed не виконується при зміні залежностей - він лише позначає себе застарілим. Тіло виконується при наступному читанні, а результат кешується, доки якась залежність не зміниться знову. Тому computed, який ніхто не читає, не витрачає нічого, а computed, прочитаний десять разів у шаблоні, виконається один раз. Це також означає, що тіло має бути чистим: побічні ефекти тут спрацьовували б непредбачувано.',
+  },
+  {
+    id: 'q-signal-set-vs-update',
+    category: 'signals',
+    q: {
+      en: 'What is the difference between set() and update(), and why is there no mutate()?',
+      uk: 'Яка різниця між set() і update() і чому немає mutate()?',
+    },
+  },
+  {
+    id: 'q-signal-equality-function',
+    category: 'signals',
+    q: {
+      en: 'How does a signal decide that its value changed, and when do you pass a custom equality function?',
+      uk: 'Як signal вирішує, що його значення змінилося, і коли передавати власну функцію рівності?',
+    },
+  },
+  {
+    id: 'q-computed-lazy-memoized',
+    category: 'signals',
+    q: {
+      en: 'Why is computed() lazy and memoized, and what follows from that for its body?',
+      uk: 'Чому computed() є лінивим і кешованим і що з цього випливає для його тіла?',
+    },
+  },
+  {
+    id: 'q-computed-dynamic-dependencies',
+    category: 'signals',
+    q: {
+      en: 'How does a computed track dependencies that only some branches of its body read?',
+      uk: 'Як computed відстежує залежності, які читаються лише в деяких гілках його тіла?',
+    },
+  },
+  {
+    id: 'q-signals-glitch-free',
+    category: 'signals',
+    q: {
+      en: 'What does it mean that the signal graph is glitch-free?',
+      uk: 'Що означає, що граф сигналів є glitch-free?',
+    },
+  },
+  {
+    id: 'q-effect-when-to-use',
+    category: 'signals',
+    q: {
+      en: 'What is effect() for, and why is it the wrong tool for deriving state?',
+      uk: 'Для чого потрібен effect() і чому він неправильний інструмент для похідного стану?',
+    },
+  },
+  {
+    id: 'q-effect-cleanup',
+    category: 'signals',
+    q: {
+      en: 'How does an effect clean up after itself, and when is it destroyed?',
+      uk: 'Як ефект прибирає за собою і коли він знищується?',
+    },
+  },
+  {
+    id: 'q-untracked',
+    category: 'signals',
+    q: {
+      en: 'What does untracked() do, and what breaks without it?',
+      uk: 'Що робить untracked() і що ламається без нього?',
     },
   },
   {
@@ -34,10 +89,77 @@ export const SIGNALS_QUESTIONS: Question[] = [
       en: 'When would you reach for linkedSignal() instead of computed()?',
       uk: 'Коли варто взяти linkedSignal() замість computed()?',
     },
-    a: {
-      en: 'When the value derives from other state but the user must still be able to override it. A computed is read-only, so a selected-row or a draft-value that resets when the source list changes cannot be a computed. linkedSignal() gives you a writable signal that recomputes from its source and forgets local writes when that source changes.',
-      uk: 'Коли значення походить з іншого стану, але користувач усе одно має змогу його змінити. Computed доступний лише для читання, тому вибраний рядок чи чернетка значення, що скидається при зміні джерела, не може бути computed. linkedSignal() дає записуваний signal, який перераховується з джерела і забуває локальні зміни, коли джерело змінюється.',
+  },
+  {
+    id: 'q-resource-api',
+    category: 'signals',
+    q: {
+      en: 'What does resource() do, and what state does it expose while loading?',
+      uk: 'Що робить resource() і який стан він надає під час завантаження?',
     },
-    code: 'const options = signal<string[]>([]);\nconst chosen = linkedSignal(() => options()[0]);\n\nchosen.set(options()[2]); // user picks another one\noptions.set([...]);       // resets back to the first',
+  },
+  {
+    id: 'q-signal-input',
+    category: 'signals',
+    q: {
+      en: 'How does input() differ from @Input, and what does input.required() enforce?',
+      uk: 'Чим input() відрізняється від @Input і що гарантує input.required()?',
+    },
+  },
+  {
+    id: 'q-model-signal',
+    category: 'signals',
+    q: {
+      en: 'What is model(), and how does it implement two-way binding?',
+      uk: "Що таке model() і як він реалізує двосторонню прив'язку?",
+    },
+  },
+  {
+    id: 'q-output-function',
+    category: 'signals',
+    q: {
+      en: 'How does the output() function differ from @Output with an EventEmitter?',
+      uk: 'Чим функція output() відрізняється від @Output з EventEmitter?',
+    },
+  },
+  {
+    id: 'q-signal-queries',
+    category: 'signals',
+    q: {
+      en: 'What do the signal-based viewChild and contentChild queries change compared with the decorators?',
+      uk: 'Що змінюють сигнальні запити viewChild і contentChild порівняно з декораторами?',
+    },
+  },
+  {
+    id: 'q-signals-in-services',
+    category: 'signals',
+    q: {
+      en: 'How do you expose signal state from a service without letting callers write to it?',
+      uk: 'Як віддати сигнальний стан із сервісу, не дозволяючи викликачам його змінювати?',
+    },
+  },
+  {
+    id: 'q-signals-and-immutability',
+    category: 'signals',
+    q: {
+      en: 'Why must the value inside a signal be treated as immutable?',
+      uk: 'Чому значення всередині сигналу слід вважати незмінним?',
+    },
+  },
+  {
+    id: 'q-signal-testing',
+    category: 'signals',
+    q: {
+      en: 'How do you test a computed signal and an effect?',
+      uk: 'Як тестувати computed-сигнал і ефект?',
+    },
+  },
+  {
+    id: 'q-migrate-to-signals',
+    category: 'signals',
+    q: {
+      en: 'How would you migrate a component from RxJS state to signals?',
+      uk: 'Як мігрувати компонент зі стану на RxJS до сигналів?',
+    },
   },
 ];
