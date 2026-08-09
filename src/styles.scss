@@ -124,6 +124,21 @@ body {
    the reduced-motion block below turns it back off. */
 html {
   scroll-behavior: smooth;
+  /* Reserve the scrollbar's column at all times, so hiding the overflow for a
+     modal below does not yank the page 15px sideways as it opens. */
+  scrollbar-gutter: stable;
+}
+
+/* A modal <dialog> makes the rest of the document inert, which stops clicks and
+   focus but says nothing about the wheel, so the page behind an open card is
+   free to scroll. Set by ModalComponent.
+
+   Not verified in this browser: the automation's synthetic wheel scrolls the
+   viewport whatever the overflow says, so it cannot tell the two states apart.
+   Kept because it is the ordinary lock every dialog carries and costs nothing
+   if Chrome already holds the page still - check it with a real wheel. */
+html.modal-open {
+  overflow: hidden;
 }
 
 body {
@@ -146,6 +161,22 @@ a:hover {
 
 ::selection {
   background: var(--accent-selection);
+}
+
+/* Text for assistive tech only: off-screen for a screen reader to read, but not
+   display:none or visibility:hidden, which would take it out of the tree it
+   needs to stay in. Global rather than per-component: a live region belongs to
+   whichever component needs to say something. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
 }
 
 @keyframes shimmer {

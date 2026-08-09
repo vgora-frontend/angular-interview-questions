@@ -1,6 +1,7 @@
 <dialog
   #dialogEl
   class="overlay"
+  tabindex="-1"
   [attr.aria-labelledby]="labelledBy() ?? null"
   (click)="onBackdropClick($event)"
   (close)="closed.emit()"
