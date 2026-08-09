@@ -91,7 +91,7 @@ describe('AuthorComponent', () => {
     // from reflowing once the file arrives.
     expect(avatar.getAttribute('width')).toBe('52');
     expect(avatar.getAttribute('height')).toBe('52');
-    expect(avatar.getAttribute('src')).toContain('author.jpg');
+    expect(avatar.getAttribute('src')).toContain('images/author.jpg');
     // Decorative: the name is right beside it as text.
     expect(avatar.getAttribute('alt')).toBe('');
   });

@@ -43,9 +43,19 @@ src/app/
     theme.service.ts    # light/dark theme (system default + storage)
   features/shared/
     header/             # site header: theme + language controls
-public/i18n/            # en.json, uk.json translation catalogues
+public/
+  favicon.ico           # kept at the root: it is fetched by path, not by <link>
+  apple-touch-icon.png  # same - iOS and link scrapers guess this exact path
+  site.webmanifest      # install metadata; its icon paths resolve relative to it
+  i18n/                 # en.json, uk.json translation catalogues
+  icons/                # favicon.svg and the icons the manifest points at
+  images/               # author.jpg, og-card.png (the social preview)
 scripts/                # check-css-tokens.mjs (pre-build guard)
 ```
+
+Everything under `public/` is copied to the deploy root as-is, so a path there is
+also a URL. The three files at the top level are the ones something fetches
+without being told where to look; anything referenced explicitly is grouped.
 
 ## Deployment
 
