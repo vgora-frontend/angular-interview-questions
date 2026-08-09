@@ -124,3 +124,27 @@
   outline-offset: var(--focus-offset);
   border-radius: var(--radius-focus);
 }
+
+/* Below this the bar cannot hold both halves on one line, and rather than
+   overflow it wraps the words: the brand broke into three lines ("Angular /
+   Interview / Q&A") and About into two, for a header three times its height.
+   Give the controls a line of their own instead, and step the brand down one
+   size so it stays on one. */
+@media (max-width: 620px) {
+  .bar {
+    flex-wrap: wrap;
+    gap: 14px;
+    padding-block: 14px;
+  }
+
+  .brand {
+    font-size: var(--text-xl);
+    white-space: nowrap;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: space-between;
+    gap: 16px;
+  }
+}

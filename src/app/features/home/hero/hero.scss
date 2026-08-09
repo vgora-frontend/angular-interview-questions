@@ -149,3 +149,19 @@
   outline: var(--focus-ring);
   outline-offset: var(--focus-offset);
 }
+
+/* On a phone the 46px headline ran six lines and filled the screen on its own:
+   the reader met the title and nothing else, no lede and no buttons. Two steps
+   down puts the whole intro in view. A step off the scale rather than a clamp(),
+   because the scale is the thing that keeps these sizes countable. */
+@media (max-width: 620px) {
+  .title {
+    font-size: var(--text-5xl);
+  }
+
+  /* The watermark is sized for a headline that is no longer this big. */
+  .ghost {
+    top: -32px;
+    font-size: 180px;
+  }
+}
