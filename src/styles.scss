@@ -4,6 +4,12 @@
 @use 'styles/icons';
 
 :root {
+  /* Tells the browser which way its own widgets should go: the rows-per-page
+     dropdown opens in the platform's colours, and the code block's scrollbar
+     stops being a light bar on a dark plate. Not a token - it is a real property
+     that the theme sets, like `background` on body. */
+  color-scheme: light;
+
   /* Light (extracted verbatim from the template) */
   --bg: #fbf9f6;
   --bg-alt: #f5f0e6;
@@ -75,6 +81,7 @@
 }
 
 :root[data-theme='dark'] {
+  color-scheme: dark;
   --bg: #1a1815;
   --bg-alt: #23201b;
   --card-bg: #23201b;
@@ -89,6 +96,15 @@
   --muted: #9a8f7e;
   --border: #322e28;
   --glass: rgba(26, 24, 21, 0.72);
+  /* On cream the shared #1e1e1e reads as a plate dropped on the page. Here it
+     lands 2.9 L* above --bg, where --card-bg sits 4.0 above: the code surface
+     separates less than the card does, which is backwards - code is the more
+     distinct medium of the two. Recessed rather than raised, at -3.9 L*, mirrors
+     the card's step in the other direction and keeps the three levels ordered:
+     code, page, card. (In this range WCAG ratios are useless for the comparison
+     - every pair of near-blacks scores about 1.1:1 - so the numbers above are
+     CIELAB lightness. --code-ink still clears 14:1 for the text itself.) */
+  --code-bg: #110f0d;
 }
 
 *,
