@@ -42,8 +42,8 @@
   @for (question of visible(); track question.id) {
     <app-question-row
       [question]="question"
-      [open]="isOpen(question.id)"
-      (toggled)="toggle(question.id)"
+      [open]="panels.isOpen(question.id)"
+      (toggled)="panels.toggle(question.id)"
     />
   } @empty {
     <p class="empty">{{ 'feed.empty' | transloco: { term: term() } }}</p>

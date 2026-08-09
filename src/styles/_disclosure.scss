@@ -1,0 +1,56 @@
+/**
+ * The open/close mechanics shared by the feed's question rows and the timeline's
+ * change rows.
+ *
+ * The two look nothing alike - one is a serif question with a category tag, the
+ * other a bold line hanging off an accent dash - but they open the same way, and
+ * the way is fiddly enough that two copies drifting apart would be a real cost:
+ * the 0fr/1fr trick and the min-height rule below are each one edit away from a
+ * panel that either jumps open or leaks its first line while shut.
+ *
+ * Only the mechanism lives here. Everything about how a row *looks* - the head,
+ * the tag, the dash, the padding inside .panel-body - stays with its component.
+ *
+ * Emits the rules under the class names both templates already use, so a caller
+ * only has to `@include disclosure.rows;` at the top level of its stylesheet.
+ */
+@mixin rows {
+  .icon {
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    color: var(--muted);
+    flex-shrink: 0;
+    display: inline-block;
+    transition:
+      transform var(--dur-slow) var(--ease),
+      color var(--dur-fast) ease;
+  }
+
+  /* The "+" becomes an "x" by turning, so the state change is one motion rather
+     than a swapped glyph. */
+  .icon.open {
+    color: var(--accent);
+    transform: rotate(45deg);
+  }
+
+  /* Animating grid-template-rows from 0fr to 1fr is what gives the panel a
+     height-less open/close transition - no measuring, no max-height guess. */
+  .panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--dur-slow) var(--ease);
+  }
+
+  .panel.open {
+    grid-template-rows: 1fr;
+  }
+
+  /* Nothing may pad this box: `min-height: 0` cannot shrink a border-box below
+     its own padding, so padding here would keep the collapsed panel that tall
+     and leak the first line of what it holds. Padding belongs on .panel-body,
+     which each component sizes for itself. */
+  .panel-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+}

@@ -27,7 +27,11 @@
     @if (version.points; as points) {
       <div class="changes">
         @for (point of points; track point.id) {
-          <app-change-row [point]="point" [open]="isOpen(point.id)" (toggled)="toggle(point.id)" />
+          <app-change-row
+            [point]="point"
+            [open]="panels.isOpen(point.id)"
+            (toggled)="panels.toggle(point.id)"
+          />
         }
       </div>
     } @else {

@@ -1,6 +1,8 @@
 /* Spacing mirrors the design template's feed row;
    type sizes, easing and durations come from the tokens in styles.scss. */
 
+@use 'disclosure';
+
 :host {
   display: block;
   border-top: 1px solid var(--border);
@@ -73,41 +75,8 @@
   flex-shrink: 0;
 }
 
-.icon {
-  font-family: var(--font-serif);
-  font-size: var(--text-2xl);
-  color: var(--muted);
-  flex-shrink: 0;
-  display: inline-block;
-  transition:
-    transform var(--dur-slow) var(--ease),
-    color var(--dur-fast) ease;
-}
-
-.icon.open {
-  color: var(--accent);
-  transform: rotate(45deg);
-}
-
-/* Accordion: animating grid-template-rows from 0fr to 1fr
-   is what gives the panel a height-less open/close transition. */
-.panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--dur-slow) var(--ease);
-}
-
-.panel.open {
-  grid-template-rows: 1fr;
-}
-
-/* Nothing may pad this box: `min-height: 0` cannot shrink a border-box below its
-   own padding, so padding here would keep the collapsed panel that tall and leak
-   the first line of the answer. Padding belongs on .panel-body. */
-.panel-inner {
-  overflow: hidden;
-  min-height: 0;
-}
+/* The marker and the panel open exactly as the timeline's change rows do. */
+@include disclosure.rows;
 
 .panel-body {
   padding: 2px 4px 30px;

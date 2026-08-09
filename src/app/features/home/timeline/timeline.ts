@@ -2,6 +2,7 @@ import { Component, computed, inject, linkedSignal, signal } from '@angular/core
 import { TranslocoPipe } from '@jsverse/transloco';
 import { ContentService } from '../../../core/content.service';
 import { LanguageService } from '../../../core/language.service';
+import { openRows } from '../../../core/open-rows';
 import { ChangeRowComponent } from './change-row/change-row';
 
 // "What changed, when": the release rail, one version's panel at a time.
@@ -63,21 +64,9 @@ export class TimelineComponent {
     computation: () => new Set(),
   });
 
+  protected readonly panels = openRows(this.expanded);
+
   protected select(id: string): void {
     this.selected.set(id);
-  }
-
-  protected isOpen(id: string): boolean {
-    return this.expanded().has(id);
-  }
-
-  protected toggle(id: string): void {
-    this.expanded.update((ids) => {
-      const next = new Set(ids);
-      if (!next.delete(id)) {
-        next.add(id);
-      }
-      return next;
-    });
   }
 }

@@ -5,6 +5,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { ContentService } from '../../../core/content.service';
 import { LanguageService } from '../../../core/language.service';
 import { ALL_CATEGORIES } from '../../../core/models/content.model';
+import { openRows } from '../../../core/open-rows';
 import { PracticeService } from '../../../core/practice.service';
 import { FilterTabsComponent } from '../../shared/filter-tabs/filter-tabs';
 import { PageSizeComponent } from '../../shared/page-size/page-size';
@@ -77,7 +78,10 @@ export class FeedComponent {
     computation: () => 1,
   });
 
+  // Open answers, kept across paging and filtering: a row the reader opened is
+  // still open when they come back to it.
   private readonly expanded = signal<ReadonlySet<string>>(new Set());
+  protected readonly panels = openRows(this.expanded);
 
   protected readonly filtered = computed(() => {
     const term = this.term().trim().toLowerCase();
@@ -116,18 +120,4 @@ export class FeedComponent {
   protected readonly countForm = computed(() =>
     new Intl.PluralRules(this.language.lang()).select(this.count()),
   );
-
-  protected isOpen(id: string): boolean {
-    return this.expanded().has(id);
-  }
-
-  protected toggle(id: string): void {
-    this.expanded.update((ids) => {
-      const next = new Set(ids);
-      if (!next.delete(id)) {
-        next.add(id);
-      }
-      return next;
-    });
-  }
 }
