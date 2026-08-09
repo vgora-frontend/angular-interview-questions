@@ -1,1 +1,16 @@
-<pre class="code"><code>{{ code() }}</code></pre>
+<div class="frame">
+  <pre class="code"><code>{{ code() }}</code></pre>
+
+  <button type="button" class="copy" (click)="copy()">
+    {{ 'code.' + state() | transloco }}
+  </button>
+
+  <!-- The button's own label changes under the pointer, which a screen reader
+       has no reason to re-read. This is what carries the outcome to it. Empty at
+       rest, so returning to 'copy' announces nothing. -->
+  <span class="visually-hidden" role="status">
+    @if (state() !== 'copy') {
+      {{ 'code.' + state() | transloco }}
+    }
+  </span>
+</div>

@@ -60,6 +60,11 @@
   "modal": {
     "close": "Close"
   },
+  "code": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "failed": "Copy failed"
+  },
   "practice": {
     "reveal": "Reveal answer",
     "soon": "The answer to this one is still being written.",

@@ -5,15 +5,62 @@
   display: block;
 }
 
+/* Positioning context for the copy button, which has to sit on the snippet
+   rather than beside it: the <pre> scrolls, and a sibling would scroll with it. */
+.frame {
+  position: relative;
+}
+
 .code {
   margin: 0;
   background: var(--code-bg);
   color: var(--code-ink);
   border: 1px solid var(--code-border);
   border-radius: 10px;
-  padding: 18px 20px;
+  /* Right padding keeps the first line clear of the button. It cannot help once
+     the line is scrolled under it - hence the button's solid fill below. */
+  padding: 18px 86px 18px 20px;
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   line-height: 1.65;
   overflow-x: auto;
+}
+
+/* Colours come from the code surface, not from the theme: this sits on a plate
+   that is dark in light mode too, where --muted would drop to 2.4:1 on it. */
+.copy {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-family: var(--font-sans);
+  font-size: var(--text-3xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  /* Legible rather than loud. Mixed toward the surface instead of set with
+     `opacity`, which fades the element as a whole - background included - and
+     let a long first line show straight through the chip. Still about 7:1,
+     well past the 4.5:1 this 11px text needs. */
+  color: color-mix(in srgb, var(--code-ink) 72%, var(--code-bg));
+  /* Opaque, so a scrolled line passes behind the chip instead of through it. */
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius-pill);
+  padding: 5px 12px;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.copy:hover,
+.copy:focus-visible {
+  color: var(--code-ink);
+  border-color: var(--accent);
+}
+
+/* Visible focus ring - the template killed outlines with all: unset. */
+.copy:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
 }
