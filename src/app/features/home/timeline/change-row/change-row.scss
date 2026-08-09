@@ -67,10 +67,12 @@
    head rather than restarting at the margin. */
 .panel-body {
   padding: 2px 4px 26px 36px;
-  max-width: var(--reading-max-width);
 }
 
+/* The measure is the prose's, not the panel's - see the same note in the feed's
+   question-row.scss. Capping the panel capped the snippet with it. */
 .body {
+  max-width: var(--reading-max-width);
   margin: 0 0 16px;
   font-size: var(--text-md);
   line-height: 1.7;

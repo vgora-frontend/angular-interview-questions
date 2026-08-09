@@ -80,10 +80,14 @@
 
 .panel-body {
   padding: 2px 4px 30px;
-  max-width: var(--reading-max-width);
 }
 
+/* The measure belongs to the prose, not to the panel: capping the whole panel
+   handed the snippet a 640px column too, and any line past ~72 characters -
+   most of them - went out through a horizontal scroll. The block now runs the
+   full row width, which fits all but the three longest lines in the data. */
 .answer {
+  max-width: var(--reading-max-width);
   margin: 0 0 16px;
   font-size: var(--text-md);
   line-height: 1.7;

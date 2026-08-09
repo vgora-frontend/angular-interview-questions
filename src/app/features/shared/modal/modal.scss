@@ -33,9 +33,13 @@
   animation: fadeInUp 0.3s var(--ease) both;
 }
 
+/* Sized like the page container, not like a paragraph: the card holds code as
+   well as prose, and at the reading measure every snippet wider than about 60
+   characters had to be scrolled sideways. The measure is kept where it belongs,
+   on the question and the answer text in practice-modal.scss. */
 .card {
   width: 100%;
-  max-width: var(--reading-max-width);
+  max-width: var(--content-max-width);
   max-height: 82vh;
   overflow-y: auto;
   background: var(--card-bg);

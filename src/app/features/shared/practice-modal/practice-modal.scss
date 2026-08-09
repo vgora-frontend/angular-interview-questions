@@ -21,7 +21,10 @@
   letter-spacing: 0.08em;
 }
 
+/* The card is as wide as the page container so snippets fit; the words are not
+   meant to run that far, so the measure sits on them. */
 .q {
+  max-width: var(--reading-max-width);
   font-family: var(--font-serif);
   font-size: var(--text-4xl);
   font-weight: 500;
@@ -48,6 +51,7 @@
 }
 
 .text {
+  max-width: var(--reading-max-width);
   margin: 0 0 16px;
   font-size: var(--text-md);
   line-height: 1.7;
