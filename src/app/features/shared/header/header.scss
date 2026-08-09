@@ -1,3 +1,5 @@
+@use 'a11y';
+
 :host {
   display: block;
   position: sticky;
@@ -67,6 +69,9 @@
   transition:
     color var(--dur-fast) var(--ease),
     border-color var(--dur-fast) var(--ease);
+
+  /* EN and UA draw at 18x20 - the smallest targets on the page. */
+  @include a11y.hit-area;
 }
 
 .lang button:hover {
@@ -98,10 +103,13 @@
   border-color: var(--accent);
 }
 
+/* A nav link standing on its own, so SC 2.5.8 has no inline exception for it. */
 .controls a {
   color: var(--muted);
   letter-spacing: 0.04em;
   transition: color var(--dur-fast) ease;
+
+  @include a11y.hit-area;
 }
 
 .controls a:hover {

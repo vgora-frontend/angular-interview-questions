@@ -1,0 +1,35 @@
+/**
+ * Pointer-target sizing.
+ *
+ * WCAG 2.2 SC 2.5.8 (AA) asks for at least 24x24 CSS px per target. Several
+ * controls here are bare text - the category tabs, the page numbers, the EN/UA
+ * switch - and each sits a few pixels short: the tabs measure 22px tall, EN/UA
+ * 18x20, and a one-character tab such as "DI" only 13px wide.
+ *
+ * Padding them up to size is not an option. Each carries its selected state as a
+ * border-bottom, and padding would drag that underline away from the word it
+ * belongs to and widen it past the text.
+ *
+ * So the hit area grows while the box stays put: an absolutely positioned
+ * pseudo-element, centred on the control and painted with nothing, enlarges what
+ * the pointer can land on. It is the button's own child, so a click on it is a
+ * click on the button, and being out of flow it moves no layout.
+ *
+ * This spends ::after. A control that already uses ::after for decoration - the
+ * pager's next arrow - has to reach the size with padding instead.
+ */
+@mixin hit-area($size: 24px) {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    min-width: $size;
+    min-height: $size;
+    transform: translate(-50%, -50%);
+  }
+}

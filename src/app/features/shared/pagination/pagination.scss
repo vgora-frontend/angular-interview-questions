@@ -1,6 +1,8 @@
 /* Spacing mirrors the design template's pagination row;
    type sizes, easing and durations come from the tokens in styles.scss. */
 
+@use 'a11y';
+
 :host {
   display: block;
 }
@@ -20,12 +22,14 @@
   padding-top: 30px;
 }
 
+/* Wide enough already; padding is what brings the 18px line up to 24 (SC 2.5.8).
+   The hit-area mixin is unavailable here - the arrows below own ::after. */
 .step {
   font-family: var(--font-sans);
   font-size: var(--text-xs);
   letter-spacing: 0.04em;
   color: var(--muted);
-  padding: 0;
+  padding: 4px 0;
   transition: color var(--dur-fast) ease;
 }
 
@@ -73,6 +77,10 @@
   transition:
     color var(--dur-fast) var(--ease),
     border-color var(--dur-fast) var(--ease);
+
+  /* A single digit draws about 7px wide. The 18px gap in .page-list leaves room
+     for the grown target without two of them touching. */
+  @include a11y.hit-area;
 }
 
 .page-number:hover {
