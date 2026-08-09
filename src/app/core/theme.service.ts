@@ -28,12 +28,32 @@ export class ThemeService {
       this.doc.documentElement.dataset['theme'] = theme;
       if (this.isBrowser) {
         localStorage.setItem(STORAGE_KEY, theme);
+        this.paintBrowserChrome();
       }
     });
   }
 
   toggle(): void {
     this.theme.set(this.next());
+  }
+
+  /**
+   * Carries the page background out to the address bar and the task switcher on
+   * mobile, so the chrome around the page is not still cream behind a dark one.
+   *
+   * The colour is read back from --bg rather than listed here: a second copy in
+   * TypeScript would be one the token checker cannot see, and it would go stale
+   * the first time the palette is retuned. Must run after data-theme is set -
+   * that attribute is what selects which --bg is in force.
+   */
+  private paintBrowserChrome(): void {
+    const bg = getComputedStyle(this.doc.documentElement).getPropertyValue('--bg').trim();
+    if (!bg) {
+      // No stylesheet in force (jsdom, or a build stripped of styles): leave the
+      // static value from index.html rather than blanking the tag.
+      return;
+    }
+    this.doc.querySelector('meta[name="theme-color"]')?.setAttribute('content', bg);
   }
 
   private initial(): Theme {

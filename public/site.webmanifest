@@ -1,0 +1,20 @@
+{
+  "name": "Angular Interview Q&A",
+  "short_name": "Angular Q&A",
+  "description": "A curated, evolving Angular interview reference. Every question answered, every answer with a worked example, in English and Ukrainian.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1a1815",
+  "theme_color": "#1a1815",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

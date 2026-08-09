@@ -84,5 +84,39 @@ describe('ThemeService', () => {
       flushEffects();
       expect(localStorage.getItem('theme')).toBe('dark');
     });
+
+    it('paints the theme-color tag with the background in force', () => {
+      const meta = document.createElement('meta');
+      meta.name = 'theme-color';
+      meta.content = '#fbf9f6';
+      document.head.appendChild(meta);
+      // jsdom resolves no stylesheet, so --bg has to be put on the element the
+      // service reads it from for the value to exist at all.
+      document.documentElement.style.setProperty('--bg', '#1a1815');
+
+      try {
+        TestBed.inject(ThemeService);
+        flushEffects();
+        expect(meta.content).toBe('#1a1815');
+      } finally {
+        document.documentElement.style.removeProperty('--bg');
+        meta.remove();
+      }
+    });
+
+    it('leaves the theme-color tag alone when no background resolves', () => {
+      const meta = document.createElement('meta');
+      meta.name = 'theme-color';
+      meta.content = '#fbf9f6';
+      document.head.appendChild(meta);
+
+      try {
+        TestBed.inject(ThemeService);
+        flushEffects();
+        expect(meta.content).toBe('#fbf9f6');
+      } finally {
+        meta.remove();
+      }
+    });
   });
 });
