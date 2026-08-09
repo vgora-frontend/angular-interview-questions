@@ -5,6 +5,7 @@ import { AuthorComponent } from './author';
 
 const TRANSLATIONS = {
   author: {
+    sources: 'Sources',
     credit: 'Questions curated and rewritten from',
     timeline: 'Version timeline compiled from the Angular release notes:',
     name: 'Vitalii Gora',
@@ -43,6 +44,12 @@ describe('AuthorComponent', () => {
     expect(host.querySelector('.role')?.textContent?.trim()).toBe(
       'Frontend Developer | Angular Specialist',
     );
+  });
+
+  it('gathers both credits under one label', () => {
+    expect(host.querySelector('.sources .eyebrow')?.textContent?.trim()).toBe('Sources');
+    // Both inside the labelled block, not stranded next to it.
+    expect(host.querySelectorAll('.sources .credits .credit')).toHaveLength(2);
   });
 
   // The source repository ships no licence file, so the credit is load-bearing

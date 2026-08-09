@@ -1,6 +1,8 @@
 /* Spacing mirrors the design template's author row;
    type sizes, colours and durations come from the tokens in styles.scss. */
 
+@use 'a11y';
+
 :host {
   display: flex;
   align-items: center;
@@ -37,6 +39,7 @@
   margin: 3px 0 0;
   font-size: var(--text-xs);
   color: var(--muted);
+  text-wrap: pretty;
 }
 
 .links {
@@ -54,26 +57,59 @@
   transition:
     color var(--dur-fast) ease,
     border-color var(--dur-fast) ease;
+
+  /* Standalone links in a row, not words inside a sentence, so SC 2.5.8 applies
+     with no inline exception to lean on - and "CV" draws 19px wide. The credit
+     links further down are inside sentences and are exempt. */
+  @include a11y.hit-area;
 }
 
 .links a:hover {
   border-bottom-color: var(--accent);
 }
 
-/* flex-basis: 100% drops it onto its own line below the row,
-   rather than competing with the links for horizontal space. */
-.credit {
+/* flex-basis: 100% drops the block onto its own line below the row, rather than
+   competing with the links for horizontal space.
+
+   The indent is the avatar's 52px plus the 20px gap, so this text starts where
+   the name does. Without it the footer had two left edges - avatar and credits
+   on one, name and role on another - and the eye had nothing to follow. With it
+   the text keeps a single axis and the picture hangs off it, in the margin.
+
+   The top margin is on top of the row gap: that gap is the same 20px that
+   separates the avatar from the name, so on its own the block read as one more
+   line of the author's details rather than as the footnote it is. */
+.sources {
   flex-basis: 100%;
+  padding-left: 72px;
+  margin-top: 16px;
+}
+
+/* The timeline heads its section the same way, at the same size and tracking.
+   One device for "what this block is", used twice. */
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: var(--text-3xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Side by side, so the pair reaches across the width the links row already uses
+   instead of stacking down the left and leaving the right half of the footer
+   empty. auto-fit rather than a fixed two, so the columns collapse to one on
+   their own once a 260px track no longer fits - no breakpoint to keep in sync. */
+.credits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px 40px;
+}
+
+.credit {
   margin: 0;
   font-size: var(--text-2xs);
   color: var(--muted);
   text-wrap: pretty;
-}
-
-/* The first credit gets its gap from the flex row above it; the second is just
-   another 100% basis item, so it has to ask for one. */
-.credit + .credit {
-  margin-top: 8px;
 }
 
 /* Punctuation between the two source links, so it is hidden from assistive tech
@@ -103,4 +139,14 @@
   outline: var(--focus-ring);
   outline-offset: var(--focus-offset);
   border-radius: var(--radius-focus);
+}
+
+/* Same breakpoint as the header and the hero. The indent buys an alignment worth
+   having on a wide screen and costs a fifth of a phone one, where these two
+   sentences are the longest text in the footer - so it goes. The columns need no
+   rule here; auto-fit has already folded them into one by this width. */
+@media (max-width: 620px) {
+  .sources {
+    padding-left: 0;
+  }
 }

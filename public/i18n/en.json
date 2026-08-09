@@ -24,6 +24,7 @@
     "quickFireSoon": "Arrives with the quiz cards"
   },
   "author": {
+    "sources": "Sources",
     "credit": "Questions curated and rewritten from",
     "timeline": "Version timeline compiled from the Angular release notes:",
     "name": "Vitalii Gora",

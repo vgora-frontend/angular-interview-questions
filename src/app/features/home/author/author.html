@@ -11,20 +11,30 @@
   <a [href]="cv" target="_blank" rel="noopener">CV</a>
 </div>
 
-<!-- Where the question set came from. The source repository ships no licence
-     file, so crediting it is deliberate rather than merely polite.
-     The repository name is a proper noun, so it is not translated. -->
-<p class="credit">
-  {{ 'author.credit' | transloco }}
-  <a [href]="source" target="_blank" rel="noopener">sudheerj/angular-interview-questions</a>
-</p>
+<!-- Where the material came from. One block rather than two loose paragraphs, so
+     a single label covers both and the pair can sit side by side beneath it.
+     The eyebrow is the same device the timeline uses to head its section. -->
+<div class="sources">
+  <p class="eyebrow">{{ 'author.sources' | transloco }}</p>
 
-<!-- And where the timeline came from. Both are Angular's own: the announcement
-     posts for what a release was about, the changelog for what it changed.
-     Neither label is translated - one is a domain, one is a filename. -->
-<p class="credit">
-  {{ 'author.timeline' | transloco }}
-  <a [href]="releaseBlog" target="_blank" rel="noopener">blog.angular.dev</a>
-  <span class="separator" aria-hidden="true">|</span>
-  <a [href]="changelog" target="_blank" rel="noopener">angular/angular CHANGELOG.md</a>
-</p>
+  <div class="credits">
+    <!-- Where the question set came from. The source repository ships no licence
+         file, so crediting it is deliberate rather than merely polite.
+         The repository name is a proper noun, so it is not translated. -->
+    <p class="credit">
+      {{ 'author.credit' | transloco }}
+      <a [href]="source" target="_blank" rel="noopener">sudheerj/angular-interview-questions</a>
+    </p>
+
+    <!-- And where the timeline came from. Both are Angular's own: the
+         announcement posts for what a release was about, the changelog for what
+         it changed. Neither label is translated - one is a domain, one a
+         filename. -->
+    <p class="credit">
+      {{ 'author.timeline' | transloco }}
+      <a [href]="releaseBlog" target="_blank" rel="noopener">blog.angular.dev</a>
+      <span class="separator" aria-hidden="true">|</span>
+      <a [href]="changelog" target="_blank" rel="noopener">angular/angular CHANGELOG.md</a>
+    </p>
+  </div>
+</div>
