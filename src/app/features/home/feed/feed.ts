@@ -7,16 +7,25 @@ import { LanguageService } from '../../../core/language.service';
 import { ALL_CATEGORIES } from '../../../core/models/content.model';
 import { PracticeService } from '../../../core/practice.service';
 import { FilterTabsComponent } from '../../shared/filter-tabs/filter-tabs';
+import { PageSizeComponent } from '../../shared/page-size/page-size';
 import { PaginationComponent } from '../../shared/pagination/pagination';
 import { SearchFieldComponent } from '../../shared/search-field/search-field';
 import { QuestionRowComponent } from './question-row/question-row';
 
-const PAGE_SIZE = 6;
+// Rows per page. Six keeps the page short enough to take in without scrolling,
+// which is the point of the default; the cost is that 346 questions become 58
+// pages. Rather than trade one reader's preference against the other's, the size
+// is theirs to pick - the pager and the count follow whatever they choose.
+// Exported for the spec, which sizes its expectations from these rather than
+// hard-coding numbers that these lines can silently invalidate.
+export const DEFAULT_PAGE_SIZE = 6;
+export const PAGE_SIZE_OPTIONS = [6, 12, 24, 48] as const;
 
 @Component({
   selector: 'app-feed',
   imports: [
     FilterTabsComponent,
+    PageSizeComponent,
     PaginationComponent,
     QuestionRowComponent,
     ReactiveFormsModule,
@@ -50,14 +59,20 @@ export class FeedComponent {
   // content model. The reset tab starts active.
   protected readonly activeCategory = signal<string>(ALL_CATEGORIES);
 
+  // Rows per page, the reader's to choose through <app-page-size>.
+  protected readonly pageSize = signal<number>(DEFAULT_PAGE_SIZE);
+  protected readonly pageSizeOptions = PAGE_SIZE_OPTIONS;
+
   // Writable, but resets to page 1 whenever the result set is rebuilt - a new
-  // search term, another category, or a language switch (the search matches the
-  // active language's text, so switching changes what is found).
+  // search term, another category, a language switch (the search matches the
+  // active language's text, so switching changes what is found), or a new page
+  // size, which renumbers every page under the reader.
   protected readonly page = linkedSignal({
     source: () => ({
       term: this.term(),
       category: this.activeCategory(),
       lang: this.language.lang(),
+      size: this.pageSize(),
     }),
     computation: () => 1,
   });
@@ -84,11 +99,14 @@ export class FeedComponent {
   });
 
   protected readonly count = computed(() => this.filtered().length);
-  protected readonly totalPages = computed(() => Math.max(1, Math.ceil(this.count() / PAGE_SIZE)));
+  protected readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.count() / this.pageSize())),
+  );
 
   protected readonly visible = computed(() => {
-    const start = (this.page() - 1) * PAGE_SIZE;
-    return this.filtered().slice(start, start + PAGE_SIZE);
+    const size = this.pageSize();
+    const start = (this.page() - 1) * size;
+    return this.filtered().slice(start, start + size);
   });
 
   // CLDR plural category ('one' | 'few' | 'many' | 'other'), used to pick the

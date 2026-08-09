@@ -33,6 +33,7 @@
     "sectionLabel": "Questions and answers",
     "tabsLabel": "Filter by category",
     "random": "Random question",
+    "perPage": "Per page",
     "soon": "SOON",
     "empty": "Nothing matches \"{{term}}\" - try another term.",
     "search": {

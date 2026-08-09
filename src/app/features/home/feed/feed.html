@@ -5,14 +5,31 @@
     [label]="'feed.search.label' | transloco"
     [placeholder]="'feed.search.placeholder' | transloco"
   />
-  <!-- Number of questions -->
-  <span class="count">
-    {{ 'feed.count.' + countForm() | transloco: { count: count() } }}
-  </span>
-  <!-- Random question -->
-  <button type="button" class="pill" (click)="practice.openRandomQuestion()">
-    {{ 'feed.random' | transloco }}
-  </button>
+  <!-- One box, not three loose items. Beside a search field that takes the space
+       left over, three siblings each pick their own moment to wrap, so the row
+       rebuilt itself around the width of the count: "346 questions" dropped
+       below while "27 questions" stayed up. Wrapping as a group keeps the order
+       and the grouping the same at every width. -->
+  <div class="meta">
+    <!-- Number of questions. role="status" because searching and switching
+         category rewrite the list with no other signal: sighted readers watch
+         the rows change, and this is what tells everyone else. Polite, so it
+         waits its turn rather than cutting into what is being read. -->
+    <span class="count" role="status">
+      {{ 'feed.count.' + countForm() | transloco: { count: count() } }}
+    </span>
+
+    <app-page-size
+      [options]="pageSizeOptions"
+      [(size)]="pageSize"
+      [label]="'feed.perPage' | transloco"
+    />
+
+    <!-- Random question -->
+    <button type="button" class="pill" (click)="practice.openRandomQuestion()">
+      {{ 'feed.random' | transloco }}
+    </button>
+  </div>
 </div>
 
 <app-filter-tabs

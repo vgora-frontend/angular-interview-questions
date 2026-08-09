@@ -5,10 +5,12 @@ import { ContentService } from '../../../core/content.service';
 import { PracticeService } from '../../../core/practice.service';
 import { Category, CategoryKey, Question } from '../../../core/models/content.model';
 import { DEFAULT_LANG, LANGS } from '../../../core/models/language.model';
-import { FeedComponent } from './feed';
+import { DEFAULT_PAGE_SIZE, FeedComponent, PAGE_SIZE_OPTIONS } from './feed';
 
 // Fixed content, so these tests do not shift every time a real question is
-// added. Eight questions over a PAGE_SIZE of 6 means page 2 holds exactly two.
+// added. Eight questions over the default page size of six means page 2 holds
+// exactly two; the expectations below are derived from the constant rather than
+// written out, so raising the default fails loudly here instead of quietly.
 const question = (id: string, category: CategoryKey, text: string): Question => ({
   id,
   category,
@@ -29,6 +31,12 @@ const QUESTIONS: Question[] = [
   question('q8', 'rxjs', 'toSignal'),
 ];
 
+// What spills past the first page, in the order the feed slices it.
+const LAST_PAGE_IDS = QUESTIONS.slice(DEFAULT_PAGE_SIZE).map((entry) => `row-${entry.id}`);
+
+// The smallest option that swallows the whole bank in one page.
+const SIZE_THAT_FITS_ALL = PAGE_SIZE_OPTIONS.find((size) => size >= QUESTIONS.length)!;
+
 const CATEGORIES: Category[] = [
   { key: 'all', label: { en: 'All', uk: 'All' } },
   { key: 'signals', label: { en: 'Signals', uk: 'Signals' } },
@@ -40,6 +48,7 @@ const TRANSLATIONS = {
     sectionLabel: 'Questions',
     tabsLabel: 'Filter',
     random: 'Random',
+    perPage: 'Per page',
     soon: 'SOON',
     empty: 'Nothing matches "{{term}}"',
     search: { placeholder: 'Search', label: 'Search questions' },
@@ -67,6 +76,17 @@ describe('FeedComponent', () => {
     Array.from(host.querySelectorAll<HTMLButtonElement>('.page-number')).find(
       (button) => button.textContent?.trim() === label,
     );
+
+  const sizeSelect = () => host.querySelector<HTMLSelectElement>('app-page-size select')!;
+
+  // Picks a rows-per-page option the way the reader does, through the select's
+  // own change event rather than by reaching for the component's signal.
+  async function chooseSize(size: number): Promise<void> {
+    const select = sizeSelect();
+    select.value = String(size);
+    select.dispatchEvent(new Event('change'));
+    await fixture.whenStable();
+  }
 
   // Types into the real input inside <app-search-field>, so the value travels
   // through its ControlValueAccessor into the feed's FormControl.
@@ -105,8 +125,8 @@ describe('FeedComponent', () => {
   });
 
   it('shows one page of questions and the total count', () => {
-    expect(rows()).toHaveLength(6);
-    expect(host.querySelector('.count')?.textContent?.trim()).toBe('8 questions');
+    expect(rows()).toHaveLength(DEFAULT_PAGE_SIZE);
+    expect(host.querySelector('.count')?.textContent?.trim()).toBe(`${QUESTIONS.length} questions`);
   });
 
   describe('pagination', () => {
@@ -114,8 +134,30 @@ describe('FeedComponent', () => {
       pageButton('2')!.click();
       await fixture.whenStable();
 
-      expect(rowIds()).toEqual(['row-q7', 'row-q8']);
+      expect(rowIds()).toEqual(LAST_PAGE_IDS);
       expect(pageButton('2')?.getAttribute('aria-current')).toBe('page');
+    });
+
+    // <app-page-size> owns the control itself - its options, its label and the
+    // string-to-number conversion are covered by page-size.spec.ts. What belongs
+    // here is what the feed does with the number that comes back.
+    it('repaginates when the reader picks another size', async () => {
+      await chooseSize(SIZE_THAT_FITS_ALL);
+
+      expect(rows()).toHaveLength(QUESTIONS.length);
+      // One page now holds everything, so there is nothing left to page through.
+      expect(host.querySelector('.pager')).toBeNull();
+    });
+
+    it('returns to page 1 when the size changes under a later page', async () => {
+      pageButton('2')!.click();
+      await fixture.whenStable();
+      expect(rowIds()).toEqual(LAST_PAGE_IDS);
+
+      await chooseSize(SIZE_THAT_FITS_ALL);
+
+      // Not stranded on a page number that no longer exists.
+      expect(rowIds()[0]).toBe('row-q1');
     });
 
     it('disables prev on the first page and next on the last', async () => {
@@ -169,7 +211,7 @@ describe('FeedComponent', () => {
     it('returns to page 1 when the result set changes', async () => {
       pageButton('2')!.click();
       await fixture.whenStable();
-      expect(rowIds()).toEqual(['row-q7', 'row-q8']);
+      expect(rowIds()).toEqual(LAST_PAGE_IDS);
 
       tab('Signals')!.click();
       await fixture.whenStable();

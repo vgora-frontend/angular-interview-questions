@@ -1,0 +1,79 @@
+/* Type sizes, easing and durations come from the tokens in styles.scss. */
+
+:host {
+  display: inline-flex;
+}
+
+.field {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: var(--text-2xs);
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.select-wrap {
+  position: relative;
+  display: inline-flex;
+  color: var(--muted); /* the chevron paints from here */
+}
+
+/* Stripped of the platform's own box and arrow, then dressed like the pill
+   beside it. The right padding is the room the chevron sits in.
+   6px of vertical padding also carries it past the 24px target (SC 2.5.8). */
+.select-wrap select {
+  appearance: none;
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 6px 30px 6px 12px;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
+}
+
+/* The open list is drawn by the browser, not by this stylesheet - the one thing
+   it does take is the colour of the options themselves, which is what keeps the
+   popup off white. `color-scheme` in styles.scss handles its frame. */
+.select-wrap option {
+  background: var(--bg-alt);
+  color: var(--ink);
+}
+
+.select-wrap::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  width: 10px;
+  height: 10px;
+  transform: translateY(-50%);
+  background-color: currentColor;
+  -webkit-mask: var(--icon-chevron) center / contain no-repeat;
+  mask: var(--icon-chevron) center / contain no-repeat;
+  pointer-events: none; /* the click belongs to the select underneath */
+}
+
+.field:hover .select-wrap {
+  color: var(--accent);
+}
+
+.field:hover select {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Visible focus ring - the template killed outlines with all: unset. */
+select:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-focus);
+}

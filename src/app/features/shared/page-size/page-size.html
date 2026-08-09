@@ -1,0 +1,16 @@
+<!-- The <label> wraps the control instead of pointing at it with `for`, so the
+     association needs no id - and a component that may appear more than once on
+     a page has no id to make unique. -->
+<label class="field">
+  {{ label() }}
+  <!-- The chevron rides on this wrapper: `appearance: none` takes the platform's
+       arrow away, and a <select> is a replaced element, so it has no
+       pseudo-element of its own to hang a new one on. -->
+  <span class="select-wrap">
+    <select #select [value]="size()" (change)="choose(select.value)">
+      @for (option of options(); track option) {
+        <option [value]="option">{{ option }}</option>
+      }
+    </select>
+  </span>
+</label>
