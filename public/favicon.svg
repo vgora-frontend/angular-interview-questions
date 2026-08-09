@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Angular Interview Q and A">
+  <!-- The site's own mark, drawn rather than typed: a favicon cannot load a
+       webfont, so this is the Newsreader Italic question mark (weight 600,
+       optical size 8, the small-text cut whose stems survive at 16px) converted
+       to an outline. The tile is the dark theme's page background and the glyph
+       its accent, so the icon holds up on light and dark browser chrome alike.
+       This file is the source of the mark; favicon.ico is rendered from it at
+       16, 32 and 48. -->
+  <rect width="64" height="64" rx="14" fill="#1a1815"/>
+  <path d="M25.16 42.67Q27.08 42.67 28.07 43.58Q29.06 44.49 29.06 46.13Q29.06 47.71 28.37 49.04Q27.68 50.38 26.26 51.19Q24.85 52 22.67 52Q20.77 52 19.77 51.09Q18.77 50.17 18.77 48.55Q18.77 46.95 19.46 45.62Q20.16 44.29 21.58 43.48Q23 42.67 25.16 42.67ZM30.2 12Q33.84 12 36.67 12.89Q39.49 13.78 41.45 15.36Q43.4 16.95 44.41 19.05Q45.42 21.15 45.42 23.59Q45.42 27.09 43.78 29.54Q42.14 31.99 38.43 33.13Q34.71 34.27 28.52 33.9L31.94 31.23L28.57 38.47H23.8L25.87 28.62Q30.61 28.94 33.22 28.4Q35.84 27.86 36.87 26.47Q37.91 25.08 37.91 22.87Q37.91 21.11 37.13 19.71Q36.36 18.31 34.82 17.5Q33.29 16.7 31 16.7Q28.89 16.7 27.42 17.32Q25.94 17.95 24.97 18.78Q24 19.61 23.33 20.24Q22.67 20.87 22.16 20.87Q20.58 20.87 19.58 19.94Q18.58 19.01 18.58 17.54Q18.58 15.96 19.67 14.7Q20.77 13.45 23.32 12.73Q25.86 12 30.2 12Z" fill="#d9915f"/>
+</svg>
