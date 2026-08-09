@@ -6,6 +6,7 @@ import { AuthorComponent } from './author';
 const TRANSLATIONS = {
   author: {
     credit: 'Questions curated and rewritten from',
+    timeline: 'Version timeline compiled from the Angular release notes:',
     name: 'Vitalii Gora',
     role: 'Frontend Developer | Angular Specialist',
   },
@@ -47,12 +48,33 @@ describe('AuthorComponent', () => {
   // The source repository ships no licence file, so the credit is load-bearing
   // rather than decorative: a test keeps it from being dropped by accident.
   it('credits the source of the question set', () => {
-    const credit = host.querySelector('.credit')!;
+    const credit = host.querySelectorAll('.credit')[0];
     const anchor = credit.querySelector<HTMLAnchorElement>('a')!;
 
     expect(credit.textContent).toContain('Questions curated and rewritten from');
     expect(anchor.href).toBe('https://github.com/sudheerj/angular-interview-questions');
     expect(anchor.rel).toBe('noopener');
+  });
+
+  // Same reasoning as the question credit: the timeline is written from someone
+  // else's release notes, so where it came from is checkable, not decorative.
+  it('credits the sources of the version timeline', () => {
+    const credit = host.querySelectorAll('.credit')[1];
+    const anchors = Array.from(credit.querySelectorAll<HTMLAnchorElement>('a'));
+
+    expect(credit.textContent).toContain(
+      'Version timeline compiled from the Angular release notes',
+    );
+    expect(anchors.map((anchor) => anchor.href)).toEqual([
+      'https://blog.angular.dev/',
+      'https://github.com/angular/angular/blob/main/CHANGELOG.md',
+    ]);
+    for (const anchor of anchors) {
+      expect(anchor.target).toBe('_blank');
+      expect(anchor.rel).toBe('noopener');
+    }
+    // The separator is punctuation, so it is not announced between the links.
+    expect(credit.querySelector('.separator')?.getAttribute('aria-hidden')).toBe('true');
   });
 
   it('reserves the avatar box and leaves its alt empty', () => {

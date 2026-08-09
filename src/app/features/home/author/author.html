@@ -18,3 +18,13 @@
   {{ 'author.credit' | transloco }}
   <a [href]="source" target="_blank" rel="noopener">sudheerj/angular-interview-questions</a>
 </p>
+
+<!-- And where the timeline came from. Both are Angular's own: the announcement
+     posts for what a release was about, the changelog for what it changed.
+     Neither label is translated - one is a domain, one is a filename. -->
+<p class="credit">
+  {{ 'author.timeline' | transloco }}
+  <a [href]="releaseBlog" target="_blank" rel="noopener">blog.angular.dev</a>
+  <span class="separator" aria-hidden="true">|</span>
+  <a [href]="changelog" target="_blank" rel="noopener">angular/angular CHANGELOG.md</a>
+</p>

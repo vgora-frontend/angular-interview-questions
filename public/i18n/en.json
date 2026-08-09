@@ -25,6 +25,7 @@
   },
   "author": {
     "credit": "Questions curated and rewritten from",
+    "timeline": "Version timeline compiled from the Angular release notes:",
     "name": "Vitalii Gora",
     "role": "Frontend Developer | Angular Specialist (AngularJS -> 22) | Legacy-to-modern migrations"
   },

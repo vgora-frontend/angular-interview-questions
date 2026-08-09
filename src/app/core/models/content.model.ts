@@ -49,10 +49,14 @@ export interface Question {
   code?: string; // optional snippet, shown under the answer
 }
 
-// One bullet under a release: a bolded head and the sentence that follows it.
+// One change under a release. The panel lists the heads; opening one reveals its
+// body and, where the change is easier shown than described, a snippet.
 export interface VersionPoint {
-  head: Localized;
-  body: Localized;
+  // Unique across every release, not just within one: it becomes a DOM id.
+  id: string;
+  head: Localized; // the line in the list
+  body: Localized; // what opens under it
+  code?: string; // optional snippet, shown under the body
 }
 
 // A release on the timeline.

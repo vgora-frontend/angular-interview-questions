@@ -1,0 +1,31 @@
+<button
+  type="button"
+  class="change-head"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="panelId()"
+  (click)="toggled.emit()"
+>
+  <span class="head-text">
+    <span class="dash" aria-hidden="true"></span>
+    <span class="head" [id]="labelId()">{{ t(point().head) }}</span>
+  </span>
+  <span class="icon" aria-hidden="true" [class.open]="open()">+</span>
+</button>
+
+<div
+  class="panel"
+  role="region"
+  [id]="panelId()"
+  [class.open]="open()"
+  [attr.aria-labelledby]="labelId()"
+  [attr.inert]="open() ? null : ''"
+>
+  <div class="panel-inner">
+    <div class="panel-body">
+      <p class="body">{{ t(point().body) }}</p>
+      @if (point().code; as code) {
+        <app-code-block [code]="code" />
+      }
+    </div>
+  </div>
+</div>

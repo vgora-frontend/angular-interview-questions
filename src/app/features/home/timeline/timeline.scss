@@ -76,7 +76,7 @@
   display: flex;
   align-items: baseline;
   gap: 16px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .title {
@@ -91,38 +91,11 @@
   color: var(--muted);
 }
 
-.points {
+/* No gap and no rules of its own: each <app-change-row> draws its own top
+   border, so the first one doubles as the line under the release title. */
+.changes {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  max-width: var(--reading-max-width);
-}
-
-.point {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-}
-
-/* Decorative dash, nudged up onto the first line's baseline. */
-.dash {
-  width: 18px;
-  height: 1px;
-  flex-shrink: 0;
-  background: var(--accent);
-  transform: translateY(-4px);
-}
-
-.text {
-  margin: 0;
-  font-size: var(--text-md);
-  line-height: 1.65;
-  color: var(--ink-soft);
-}
-
-.text strong {
-  font-weight: 600;
-  color: var(--ink);
 }
 
 .soon {

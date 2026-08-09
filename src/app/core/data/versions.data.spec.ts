@@ -8,6 +8,13 @@ import { VERSIONS } from './versions.data';
 // middle dot, arrow. Ukrainian letters are fine, these are not.
 const TYPOGRAPHIC = /[\u2013\u2014\u2018\u2019\u201c\u201d\u2026\u00b7\u2192]/;
 
+// Printable ASCII plus newline - what a code snippet may contain.
+const ASCII_ONLY = /^[\x20-\x7e\n]*$/;
+
+const POINTS = VERSIONS.flatMap((version) =>
+  (version.points ?? []).map((point) => ({ version: version.id, point })),
+);
+
 describe('version data', () => {
   it('gives every release a unique id and a label', () => {
     const ids = VERSIONS.map((version) => version.id);
@@ -63,6 +70,39 @@ describe('version data', () => {
           expect(text).not.toMatch(TYPOGRAPHIC);
         }
       }
+    }
+    for (const { point } of POINTS) {
+      expect(point.code ?? '').not.toMatch(TYPOGRAPHIC);
+    }
+  });
+
+  // Unique across the whole timeline, not just within a release: the ids become
+  // the DOM ids that tie a change row's button to the panel it controls.
+  it('gives every change a unique, well-formed id', () => {
+    const ids = POINTS.map(({ point }) => point.id);
+
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const id of ids) {
+      expect(id).toMatch(/^[a-z0-9]+-[a-z0-9-]+$/);
+    }
+  });
+
+  // A snippet is rendered verbatim in a <pre>, so a stray non-ASCII character -
+  // a pasted curly quote, a non-breaking space - is a syntax error on display.
+  it('keeps code snippets ASCII-only', () => {
+    for (const { version, point } of POINTS) {
+      if (point.code !== undefined) {
+        expect(point.code, `${version} ${point.id}`).toMatch(ASCII_ONLY);
+      }
+    }
+  });
+
+  // Releases are written oldest first and the newest is the one still being
+  // documented, so at most that last entry may be blank. A gap anywhere behind
+  // it is an entry somebody forgot, not one still waiting on its release notes.
+  it('leaves nothing but the newest release unwritten', () => {
+    for (const version of VERSIONS.slice(0, -1)) {
+      expect(version.points?.length ?? 0, version.id).toBeGreaterThan(0);
     }
   });
 });

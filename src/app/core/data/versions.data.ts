@@ -1,66 +1,63 @@
 import { VersionEntry } from '../models/content.model';
+import { ANGULARJS } from './versions/angularjs.data';
+import { V2 } from './versions/v2.data';
+import { V4 } from './versions/v4.data';
+import { V5 } from './versions/v5.data';
+import { V6 } from './versions/v6.data';
+import { V7 } from './versions/v7.data';
+import { V8 } from './versions/v8.data';
+import { V9 } from './versions/v9.data';
+import { V10 } from './versions/v10.data';
+import { V11 } from './versions/v11.data';
+import { V12 } from './versions/v12.data';
+import { V13 } from './versions/v13.data';
+import { V14 } from './versions/v14.data';
+import { V15 } from './versions/v15.data';
+import { V16 } from './versions/v16.data';
+import { V17 } from './versions/v17.data';
+import { V18 } from './versions/v18.data';
+import { V19 } from './versions/v19.data';
+import { V20 } from './versions/v20.data';
+import { V21 } from './versions/v21.data';
+import { V22 } from './versions/v22.data';
 
 // Every Angular major, oldest first - the rail renders them in this order and
-// opens on the last one.
+// opens on the last one. One file per release, the way the question bank keeps
+// one file per category: a release is written once, in full, in one place.
 //
-// There is no v3: the router package had already reached 3.x, so the team skipped
-// the number to bring every package back onto one version line.
+// Written against the release notes rather than from memory - the announcement
+// posts on blog.angular.dev and the CHANGELOG.md in angular/angular. A point
+// says which release something landed in and what state it landed in
+// (experimental, developer preview, stable), because for anything since v16
+// that distinction is most of the answer.
 //
-// Highlights are written one release at a time. An entry with no `title` and no
-// `points` is a version whose panel still says "on the way" - that is the
-// placeholder, rather than filler prose pretending to be content. v17 below shows
-// the shape a filled entry takes.
+// There is no v3: the router package had already reached 3.x, so the number was
+// skipped to bring every package back onto one version line.
+//
+// A release whose highlights are still unwritten carries no title and no points,
+// and its panel shows the "on the way" note rather than filler prose pretending
+// to be content. Nothing is in that state today; the next major will be, until
+// it is written.
 export const VERSIONS: VersionEntry[] = [
-  { id: 'angularjs', label: 'AngularJS', year: 2010 },
-  { id: 'v2', label: 'v2', year: 2016 },
-  { id: 'v4', label: 'v4', year: 2017 },
-  { id: 'v5', label: 'v5', year: 2017 },
-  { id: 'v6', label: 'v6', year: 2018 },
-  { id: 'v7', label: 'v7', year: 2018 },
-  { id: 'v8', label: 'v8', year: 2019 },
-  { id: 'v9', label: 'v9', year: 2020 },
-  { id: 'v10', label: 'v10', year: 2020 },
-  { id: 'v11', label: 'v11', year: 2020 },
-  { id: 'v12', label: 'v12', year: 2021 },
-  { id: 'v13', label: 'v13', year: 2021 },
-  { id: 'v14', label: 'v14', year: 2022 },
-  { id: 'v15', label: 'v15', year: 2022 },
-  { id: 'v16', label: 'v16', year: 2023 },
-  {
-    id: 'v17',
-    label: 'v17',
-    year: 2023,
-    title: {
-      en: 'Built-in control flow and deferrable views',
-      uk: 'Вбудований control flow і deferrable views',
-    },
-    points: [
-      {
-        head: { en: 'New control flow', uk: 'Новий control flow' },
-        body: {
-          en: '@if, @for and @switch replace the structural directives: nothing to import, and the compiler narrows types through them.',
-          uk: '@if, @for і @switch замінюють структурні директиви: нічого не потрібно імпортувати, і компілятор звужує типи через них.',
-        },
-      },
-      {
-        head: { en: 'Deferrable views', uk: 'Deferrable views' },
-        body: {
-          en: '@defer moves a template and its dependencies into a lazy chunk, with triggers that decide when to fetch it.',
-          uk: '@defer переносить шаблон і його залежності в лінивий чанк, а тригери вирішують, коли його завантажити.',
-        },
-      },
-      {
-        head: { en: 'esbuild and Vite by default', uk: 'esbuild і Vite за замовчуванням' },
-        body: {
-          en: 'The application builder became the default, cutting cold build and dev-server start times.',
-          uk: 'Application builder став типовим, скоротивши час холодної збірки та старту dev-сервера.',
-        },
-      },
-    ],
-  },
-  { id: 'v18', label: 'v18', year: 2024 },
-  { id: 'v19', label: 'v19', year: 2024 },
-  { id: 'v20', label: 'v20', year: 2025 },
-  { id: 'v21', label: 'v21', year: 2025 },
-  { id: 'v22', label: 'v22', year: 2026 },
+  ANGULARJS,
+  V2,
+  V4,
+  V5,
+  V6,
+  V7,
+  V8,
+  V9,
+  V10,
+  V11,
+  V12,
+  V13,
+  V14,
+  V15,
+  V16,
+  V17,
+  V18,
+  V19,
+  V20,
+  V21,
+  V22,
 ];

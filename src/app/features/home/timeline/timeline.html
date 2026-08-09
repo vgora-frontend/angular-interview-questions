@@ -25,14 +25,9 @@
     </div>
 
     @if (version.points; as points) {
-      <div class="points">
-        @for (point of points; track point.head) {
-          <div class="point">
-            <span class="dash" aria-hidden="true"></span>
-            <p class="text">
-              <strong>{{ point.head }}</strong> - {{ point.body }}
-            </p>
-          </div>
+      <div class="changes">
+        @for (point of points; track point.id) {
+          <app-change-row [point]="point" [open]="isOpen(point.id)" (toggled)="toggle(point.id)" />
         }
       </div>
     } @else {

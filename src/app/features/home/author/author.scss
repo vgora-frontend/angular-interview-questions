@@ -70,6 +70,19 @@
   text-wrap: pretty;
 }
 
+/* The first credit gets its gap from the flex row above it; the second is just
+   another 100% basis item, so it has to ask for one. */
+.credit + .credit {
+  margin-top: 8px;
+}
+
+/* Punctuation between the two source links, so it is hidden from assistive tech
+   in the template and only has to look right here. */
+.separator {
+  padding: 0 4px;
+  color: var(--border);
+}
+
 .credit a {
   color: inherit;
   border-bottom: 1px solid var(--border);
