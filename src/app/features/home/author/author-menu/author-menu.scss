@@ -1,0 +1,237 @@
+/* The avatar and the panel it opens. Colours, easing and durations are the
+   tokens from styles.scss; nothing here invents a value. */
+
+/* Positioning context for the panel, and the 52px flex item the author row used
+   to get from the bare <img>. line-height: 0 keeps the box to the picture. */
+:host {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+/* Positioning context for the pulse ring, which has to sit on the picture
+   rather than beside it. */
+.trigger {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* The source is 256px square for sharpness on dense screens;
+   52px is what it renders at, and NgOptimizedImage needs both numbers to reserve the box. */
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  transition:
+    border-color var(--dur-fast) ease,
+    box-shadow var(--dur-fast) var(--ease);
+}
+
+/* Says the picture is a control before it is pressed, and keeps saying it while
+   the panel is up - the trigger is the only part of the pair that stays put. */
+.trigger:hover .avatar,
+.trigger[aria-expanded='true'] .avatar {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-tint);
+}
+
+/* Rests invisible and only exists to be animated: a ring painted permanently
+   around a photograph is decoration, and this has a job. */
+.pulse {
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Beats for as long as the hint is armed. It was a burst of three and then
+   nothing, which is why it kept being found dead: five seconds after the footer
+   scrolled into view the avatar was inert again, and any interaction after that
+   - a theme switch, say - looked like the thing that had killed it.
+
+   The class is the component's, and it is armed only while the footer is on
+   screen and the menu has never been opened. See the note on `hinting`. */
+:host(.hint) .pulse {
+  /* linear, not --ease: the curve is in the keyframes, and layering the token's
+     ease-out on top of it collapsed the whole ring into the first 300ms. */
+  animation: avatarPulse 4s linear infinite;
+}
+
+/* Interacting with the picture answers the question the ring was asking, so it
+   stops mid-cycle rather than pulsing on over the top of the hover state. */
+.trigger:hover .pulse,
+.trigger:focus-visible .pulse {
+  animation: none;
+}
+
+/* Visible focus ring - the template killed outlines with all: unset. */
+.trigger:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+/* Opens upward on purpose: this is the last block on the page, and a panel
+   dropping from it would open into the space below the footer.
+
+   visibility rides in the transition rather than switching at once, so it holds
+   until the fade is over on the way out and the panel is untouchable the rest of
+   the time - opacity: 0 alone still takes clicks. */
+.menu {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 0;
+  z-index: 2;
+  /* A floor, not the width: .where refuses to wrap, so the panel takes whatever
+     the longest address needs. A URL broken across two lines stops being one
+     thing the eye can read at a glance. */
+  min-width: 216px;
+  padding: 14px 8px 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 14px 30px var(--overlay-shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px) scale(0.96);
+  transform-origin: bottom left;
+  transition:
+    opacity var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease),
+    visibility var(--dur-fast);
+}
+
+.menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+/* Same device, size and tracking as the sources block and the timeline. The
+   rule under it is the hairline those sections use to close a heading. */
+.eyebrow {
+  margin: 0 4px 8px;
+  padding: 0 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--text-3xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Two lines and an arrow: label and domain stack in the first column, the arrow
+   spans both rows in the second so it centres against the pair. */
+.menu a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 16px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition:
+    background var(--dur-fast) ease,
+    color var(--dur-fast) ease;
+}
+
+.label {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* The account, not just the site. Mono because it is a URL, and mono is what
+   this design uses whenever it shows one. */
+.where {
+  font-family: var(--font-mono);
+  font-size: var(--text-3xs);
+  line-height: 1.5;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color var(--dur-fast) ease;
+}
+
+/* Every one of these leaves the site, and the arrow is the only thing that says
+   so before the click. The same glyph the practice modal ends its label with. */
+/* --muted, not --border: at --border the arrow all but vanished on the dark
+   theme's card, which is the one place this panel most needed it. */
+.menu a::after {
+  content: '\2192';
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: var(--muted);
+  font-size: var(--text-md);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    color var(--dur-fast) ease;
+}
+
+/* --accent-tint, not --bg-alt: in the dark theme --bg-alt and --card-bg are the
+   same colour, so a row highlighted with it would light up into nothing. */
+.menu a:hover {
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+
+.menu a:hover .where {
+  color: var(--accent);
+}
+
+.menu a:hover::after {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+.menu a:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: -1px;
+}
+
+/* The rows arrive a beat after the panel and a beat apart, so it reads as
+   opening rather than as appearing already full.
+
+   Guarded the positive way round: under reduced motion the block never applies,
+   the delays are never set, and the three land together. Putting it in the
+   negative query would leave the delays behind for the query in styles.scss to
+   undo, and that one only zeroes durations. */
+@media (prefers-reduced-motion: no-preference) {
+  .menu li {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity var(--dur-fast) var(--ease),
+      transform var(--dur-fast) var(--ease);
+  }
+
+  .menu.open li {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* On the way out the class is gone, so these do not apply and the three leave
+     together - a staggered close reads as the panel struggling to shut. */
+  .menu.open li:nth-child(2) {
+    transition-delay: 45ms;
+  }
+
+  .menu.open li:nth-child(3) {
+    transition-delay: 90ms;
+  }
+}

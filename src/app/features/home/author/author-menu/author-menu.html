@@ -1,0 +1,40 @@
+<!-- The picture is decorative - the name is right beside it as text - so the
+     button carries the accessible name rather than the image's alt. -->
+<button
+  #trigger
+  type="button"
+  class="trigger"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="menuId"
+  [attr.aria-label]="'author.menu' | transloco"
+  (click)="toggle()"
+>
+  <img ngSrc="images/author.jpg" width="52" height="52" alt="" class="avatar" />
+  <!-- The pulse ring. Decorative and out of the accessibility tree: the button
+       is already named, and a reader gains nothing from being told it throbs. -->
+  <span class="pulse" aria-hidden="true"></span>
+</button>
+
+<!-- inert while shut, so Tab cannot reach a link the reader cannot see. The
+     visibility in the stylesheet does the same for assistive tech; both, because
+     the transition holds visibility until the fade is over. -->
+<div class="menu" [id]="menuId" [class.open]="open()" [attr.inert]="open() ? null : ''">
+  <!-- The same eyebrow the sources block and the timeline head their sections
+       with, so the panel reads as part of the page rather than as a widget. -->
+  <p class="eyebrow">{{ 'author.elsewhere' | transloco }}</p>
+
+  <ul>
+    @for (row of rows(); track row.href) {
+      <li>
+        <!-- Closing on click matters here: the tab opens elsewhere and this one
+             would be left with the menu still hanging open behind it. -->
+        <a [href]="row.href" target="_blank" rel="noopener" (click)="close()">
+          <span class="label">{{ row.label }}</span>
+          <!-- Where the link actually goes. Announced with the label rather than
+               hidden: "LinkedIn" alone says the site, not the account. -->
+          <span class="where">{{ row.where }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+</div>

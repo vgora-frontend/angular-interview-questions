@@ -1,14 +1,17 @@
-<img ngSrc="images/author.jpg" width="52" height="52" alt="" class="avatar" />
+<app-author-menu [links]="profiles" />
 
 <div class="identity">
   <h2 class="name">{{ 'author.name' | transloco }}</h2>
   <p class="role">{{ 'author.role' | transloco }}</p>
 </div>
 
+<!-- The same destinations the avatar opens. Kept in the open because a link
+     nobody can see until they think to press a photograph is a link most
+     readers never find. -->
 <div class="links">
-  <a [href]="linkedIn" target="_blank" rel="noopener">LinkedIn</a>
-  <a [href]="github" target="_blank" rel="noopener">GitHub</a>
-  <a [href]="cv" target="_blank" rel="noopener">CV</a>
+  @for (profile of profiles; track profile.href) {
+    <a [href]="profile.href" target="_blank" rel="noopener">{{ profile.label }}</a>
+  }
 </div>
 
 <!-- Where the material came from. One block rather than two loose paragraphs, so

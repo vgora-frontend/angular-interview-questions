@@ -12,15 +12,9 @@
   padding-top: 40px;
 }
 
-/* The source is 256px square for sharpness on dense screens;
-   52px is what it renders at, and NgOptimizedImage needs both numbers to reserve the box. */
-.avatar {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid var(--border);
-}
+/* The avatar and its menu are app-author-menu's, styles included. What stays
+   here is only what the row needs from them: 52px wide, which the indent under
+   .sources is measured against. */
 
 /* Takes the middle, and wraps below the avatar before the text gets squeezed. */
 .identity {

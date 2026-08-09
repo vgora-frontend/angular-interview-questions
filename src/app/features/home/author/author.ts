@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { AuthorLink, AuthorMenuComponent } from './author-menu/author-menu';
 
 @Component({
   selector: 'app-author',
-  imports: [NgOptimizedImage, TranslocoPipe],
+  imports: [AuthorMenuComponent, TranslocoPipe],
   templateUrl: './author.html',
   styleUrl: './author.scss',
   host: {
@@ -13,9 +13,18 @@ import { TranslocoPipe } from '@jsverse/transloco';
   },
 })
 export class AuthorComponent {
-  protected readonly linkedIn = 'https://www.linkedin.com/in/vgora-frontend/';
-  protected readonly github = 'https://github.com/vgora-frontend/';
-  protected readonly cv = 'https://vgora-frontend.github.io/cv/';
+  // One list, two ways in: the row of links in the footer and the menu behind
+  // the avatar. Declared here rather than in the menu so the two cannot drift
+  // into offering different destinations.
+  //
+  // The labels are proper nouns and an abbreviation the two locales share, so
+  // they are not translated.
+  protected readonly profiles: readonly AuthorLink[] = [
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/vgora-frontend/' },
+    { label: 'GitHub', href: 'https://github.com/vgora-frontend/' },
+    { label: 'CV', href: 'https://vgora-frontend.github.io/cv/' },
+  ];
+
   protected readonly source = 'https://github.com/sudheerj/angular-interview-questions';
 
   // Where the release highlights come from. Two links because they answer

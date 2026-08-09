@@ -31,6 +31,10 @@
   --border: #e8e2d5;
   --glass: rgba(251, 249, 246, 0.72);
   --scrim: rgba(25, 25, 25, 0.55); /* modal dim - deliberately the same over both themes */
+  /* Under a panel that floats above the page. --card-bg sits 1.5 L* from --bg
+     here, which separates a block sitting in the flow but not one hovering over
+     it, so the shadow is what says the panel is off the page. */
+  --overlay-shadow: rgba(35, 32, 27, 0.16);
   --code-bg: #1e1e1e;
   --code-ink: #e8e2d5;
   --code-border: rgba(255, 255, 255, 0.06); /* hairline on the always-dark code surface */
@@ -96,6 +100,9 @@
   --muted: #9a8f7e;
   --border: #322e28;
   --glass: rgba(26, 24, 21, 0.72);
+  /* Deeper than the light theme's: on a near-black page a 0.16 shadow is
+     invisible, and the panel would float with nothing under it. */
+  --overlay-shadow: rgba(0, 0, 0, 0.55);
   /* On cream the shared #1e1e1e reads as a plate dropped on the page. Here it
      lands 2.9 L* above --bg, where --card-bg sits 4.0 above: the code surface
      separates less than the card does, which is backwards - code is the more
@@ -186,6 +193,38 @@ a:hover {
   }
   50% {
     opacity: 0.9;
+  }
+}
+
+/* A ring leaving the author's avatar, to say the photograph is a control.
+
+   The rest between beats is inside the keyframes rather than left to a repeat
+   delay, which CSS has no such thing as: the ring is gone by 38% and the rest of
+   the cycle is silence, so this reads as a heartbeat and not as a strobe.
+
+   The shape is in the stops, and the caller runs it linear. Under --ease - a
+   hard ease-out - nine tenths of the fade was over in the first quarter of the
+   ring's life, which read as a blink rather than a pulse. Ends fully
+   transparent, so the picture is left exactly as it was found. */
+@keyframes avatarPulse {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  8% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+
+  38% {
+    opacity: 0;
+    transform: scale(1.45);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.45);
   }
 }
 

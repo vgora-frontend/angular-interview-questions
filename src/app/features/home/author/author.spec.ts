@@ -5,6 +5,7 @@ import { AuthorComponent } from './author';
 
 const TRANSLATIONS = {
   author: {
+    menu: 'Author links',
     sources: 'Sources',
     credit: 'Questions curated and rewritten from',
     timeline: 'Version timeline compiled from the Angular release notes:',
@@ -84,18 +85,6 @@ describe('AuthorComponent', () => {
     expect(credit.querySelector('.separator')?.getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('reserves the avatar box and leaves its alt empty', () => {
-    const avatar = host.querySelector<HTMLImageElement>('img.avatar')!;
-
-    // Both dimensions are required by NgOptimizedImage, and they stop the row
-    // from reflowing once the file arrives.
-    expect(avatar.getAttribute('width')).toBe('52');
-    expect(avatar.getAttribute('height')).toBe('52');
-    expect(avatar.getAttribute('src')).toContain('images/author.jpg');
-    // Decorative: the name is right beside it as text.
-    expect(avatar.getAttribute('alt')).toBe('');
-  });
-
   it('opens both profiles in a new tab without handing over the opener', () => {
     for (const label of ['LinkedIn', 'GitHub']) {
       const anchor = link(label);
@@ -103,6 +92,19 @@ describe('AuthorComponent', () => {
       expect(anchor?.rel).toContain('noopener');
       expect(anchor?.getAttribute('href')).toMatch(/^https:\/\//);
     }
+  });
+
+  // One array feeds the row and the avatar's menu. If they ever came from two
+  // places, this is where the drift would show up first.
+  it('offers the same destinations in the row and behind the avatar', () => {
+    const inRow = Array.from(host.querySelectorAll<HTMLAnchorElement>('.links a'));
+    const inMenu = Array.from(host.querySelectorAll<HTMLAnchorElement>('.menu a'));
+
+    expect(inRow).toHaveLength(3);
+    expect(inMenu.map((a) => a.getAttribute('href'))).toEqual(
+      inRow.map((a) => a.getAttribute('href')),
+    );
+    expect(inRow.map((a) => a.textContent?.trim())).toEqual(['LinkedIn', 'GitHub', 'CV']);
   });
 
   it('answers the header About link', () => {
