@@ -3,7 +3,7 @@ import { FilterTab, FilterTabsComponent } from './filter-tabs';
 
 const TABS: FilterTab[] = [
   { key: 'all', label: 'All' },
-  { key: 'signals', label: 'Signals', divider: true },
+  { key: 'signals', label: 'Signals', groupStart: true },
   { key: 'rxjs', label: 'RxJS' },
 ];
 
@@ -39,12 +39,13 @@ describe('FilterTabsComponent', () => {
     expect(host.querySelector('div')).toBeNull();
   });
 
-  it('renders a decorative divider before a tab that asks for one', () => {
-    const dividers = host.querySelectorAll('.divider');
-    expect(dividers).toHaveLength(1);
-    expect(dividers[0].getAttribute('aria-hidden')).toBe('true');
-    // Sits immediately before the tab that declared it.
-    expect(dividers[0].nextElementSibling?.textContent?.trim()).toBe('Signals');
+  it('opens a run on the tab that asks for one, adding no element to do it', () => {
+    const starts = host.querySelectorAll('.tab.group-start');
+    expect(starts).toHaveLength(1);
+    expect(starts[0].textContent?.trim()).toBe('Signals');
+    // The gap is the whole separator. Anything else would be a flex item of a
+    // wrapping row, and would strand itself at the end of a broken line.
+    expect(host.querySelectorAll('span')).toHaveLength(0);
   });
 
   it('marks only the active tab, for sighted and assistive users alike', async () => {

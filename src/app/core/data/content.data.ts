@@ -26,12 +26,13 @@ import { TOOLING_QUESTIONS } from './questions/tooling.data';
 // 'all' is the reset tab and matches every question;
 // the rest match Question.category one-to-one.
 //
-// The dividers split the tabs into four runs - the framework itself, then data
-// and async, then reactivity, then everything around the app. They are cosmetic:
-// a tab belongs to a run by position, not by any field on the category.
+// groupStart splits the tabs into four runs - the framework itself, then data
+// and async, then reactivity, then everything around the app. The split is
+// cosmetic, drawn as a wider gap: a tab belongs to a run by position, not by any
+// field on the category.
 export const CATEGORIES: Category[] = [
   { key: ALL_CATEGORIES, label: { en: 'All', uk: 'Усі' } },
-  { key: 'basics', label: { en: 'Basics', uk: 'Основи' }, divider: true },
+  { key: 'basics', label: { en: 'Basics', uk: 'Основи' }, groupStart: true },
   { key: 'components', label: { en: 'Components', uk: 'Компоненти' } },
   { key: 'templates', label: { en: 'Templates', uk: 'Шаблони' } },
   { key: 'directives', label: { en: 'Directives', uk: 'Директиви' } },
@@ -39,11 +40,11 @@ export const CATEGORIES: Category[] = [
   { key: 'di', label: { en: 'DI', uk: 'DI' } },
   { key: 'routing', label: { en: 'Routing', uk: 'Роутинг' } },
   { key: 'forms', label: { en: 'Forms', uk: 'Форми' } },
-  { key: 'rxjs', label: { en: 'RxJS', uk: 'RxJS' }, divider: true },
+  { key: 'rxjs', label: { en: 'RxJS', uk: 'RxJS' }, groupStart: true },
   { key: 'http', label: { en: 'HTTP', uk: 'HTTP' } },
-  { key: 'signals', label: { en: 'Signals', uk: 'Сигнали' }, divider: true },
+  { key: 'signals', label: { en: 'Signals', uk: 'Сигнали' }, groupStart: true },
   { key: 'cd', label: { en: 'Change detection', uk: 'Change detection' } },
-  { key: 'performance', label: { en: 'Performance', uk: 'Продуктивність' }, divider: true },
+  { key: 'performance', label: { en: 'Performance', uk: 'Продуктивність' }, groupStart: true },
   { key: 'testing', label: { en: 'Testing', uk: 'Тестування' } },
   { key: 'security', label: { en: 'Security', uk: 'Безпека' } },
   { key: 'tooling', label: { en: 'Tooling', uk: 'Інструменти' } },

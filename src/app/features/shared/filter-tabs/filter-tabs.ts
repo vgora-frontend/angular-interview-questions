@@ -5,7 +5,7 @@ import { Component, input, model } from '@angular/core';
 export interface FilterTab {
   key: string;
   label: string;
-  divider?: boolean; // render a separator before this tab
+  groupStart?: boolean; // opens a new run of related tabs, set apart by a wider gap
 }
 
 // A row of single-choice tabs. The selection is two-way bound,

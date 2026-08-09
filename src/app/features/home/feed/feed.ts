@@ -39,7 +39,7 @@ export class FeedComponent {
     this.content.categories().map((category) => ({
       key: category.key,
       label: this.t(category.label),
-      divider: category.divider,
+      groupStart: category.groupStart,
     })),
   );
 

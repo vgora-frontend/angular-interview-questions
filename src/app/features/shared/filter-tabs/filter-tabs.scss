@@ -1,6 +1,8 @@
 /* Spacing mirrors the design template's category tabs;
    type sizes, easing and durations come from the tokens in styles.scss. */
 
+@use 'a11y';
+
 :host {
   display: flex;
   align-items: baseline;
@@ -9,11 +11,6 @@
   flex-wrap: wrap;
   font-size: var(--text-xs);
   letter-spacing: 0.03em;
-}
-
-.divider {
-  color: var(--border);
-  font-size: var(--text-2xs);
 }
 
 .tab {
@@ -29,6 +26,17 @@
   transition:
     color var(--dur-fast) var(--ease),
     border-color var(--dur-fast) var(--ease);
+
+  @include a11y.hit-area;
+}
+
+/* The runs of related categories are told apart by a wider gap rather than by a
+   glyph. A "|" between them was a flex item of this wrapping row, so whenever
+   the row broke - which it does on every phone, and at 1440px too - a separator
+   was left dangling at the end of a line, pointing at nothing. Space cannot be
+   orphaned: 14px inside a run, 24px between two. */
+.tab.group-start {
+  margin-left: 10px;
 }
 
 .tab:hover {

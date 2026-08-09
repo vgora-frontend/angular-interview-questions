@@ -1,10 +1,8 @@
 @for (tab of tabs(); track tab.key) {
-  @if (tab.divider) {
-    <span class="divider" aria-hidden="true">|</span>
-  }
   <button
     type="button"
     class="tab"
+    [class.group-start]="tab.groupStart"
     [class.active]="active() === tab.key"
     [attr.aria-pressed]="active() === tab.key"
     (click)="select(tab.key)"

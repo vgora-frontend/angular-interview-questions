@@ -35,7 +35,7 @@ export type CategoryFilter = CategoryKey | typeof ALL_CATEGORIES;
 export interface Category {
   key: CategoryFilter;
   label: Localized;
-  divider?: boolean; // render a separator before this tab
+  groupStart?: boolean; // opens a new run of related tabs, set apart by a wider gap
 }
 
 export interface Question {
